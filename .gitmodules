@@ -1,0 +1,3 @@
+[submodule "UART_Controller"]
+	path = UART_Controller
+	url = https://github.com/wd5gnr/icestickPWM.git
