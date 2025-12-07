@@ -1,0 +1,450 @@
+addi x1, x0, 5		#program_0 
+
+addi x1, x0, 5
+addi x2, x0, 3
+sub x1, x2, x1		#program_1 
+
+addi x1, x0 10
+addi x2, x0, 15
+xor x1, x1, x2		#program_2 
+
+addi x1, x0, 5
+addi x2, x0, 10
+or x1, x1, x2		#program_3 
+
+addi x1, x0, 10
+addi x2, x0, 8
+and x1, x1, x2		#program_4 
+
+addi x1, x0, 1
+addi x2, x0, 5
+sll x1, x1, x2		#program_5 
+
+addi x1, x0, 4
+addi x2, x0, 2
+srl x1, x1, x2		#program_6 
+
+addi x1, x0, 0xff
+addi x2, x0, 24
+sll x1, x1, x2
+addi x2, x0, 8
+sra x1, x1, x2		#program_7 
+
+addi x1, x0, 5
+addi x2, x0, 3
+slt x1, x1, x2		#program_8 
+
+addi x1, x0, 5
+addi x2, x0, 3
+slt x1, x2, x1		#program_9 
+
+addi x1, x0, -5
+addi x2, x0, 3
+slt x1, x2, x1		#program_10 
+
+addi x1, x0, -5
+addi x2, x0, 3
+slt x1, x1, x2		#program_11 
+
+addi x1, x0, 5
+addi x2, x0, 3
+sltu x1, x1, x2		#program_12 
+
+addi x1, x0, 5
+addi x2, x0, 3
+sltu x1, x2, x1		#program_13 
+
+addi x1, x0, -5
+addi x2, x0, 3
+sltu x1, x2, x1		#program_14 
+
+addi x1, x0, -5
+addi x2, x0, 3
+sltu x1, x1, x2 	#program_15 
+
+addi x1, x0, 5
+addi x2, x0, 3
+add x1, x1, x2        	#program_16 
+
+addi x1, x0, -5
+addi x2, x0, 3
+add x1, x1, x2        	#program_17 
+
+addi x1, x0, 0xff
+xori x1, x1, 0xf0	#program_18 
+
+addi x1, x0, 0
+ori x1, x1, 0xf0	#program_19 
+
+addi x2, x0, 0xff
+andi x1, x2, 0xf0	#program_20 
+
+addi x1, x0, 10
+slti x1, x1, 20		#program_21 
+
+addi x1, x0, 10
+slti x1, x1, -20	#program_22 
+
+addi x1, x0, 20
+slti x1, x1, 10		#program_23 
+
+addi x1, x0, -20
+slti x1, x1, 10		#program_24 
+
+addi x1, x0, 5		#program_25 
+sltiu x1, x1, 3	
+
+addi x1, x0, 3		#program_26 
+sltiu x1, x1, 5	
+
+addi x1, x0, -3		#program_27 
+sltiu x1, x1, 5	
+
+addi x1, x0, 3		#program_28 
+sltiu x1, x1, -5	
+
+addi x1, x0, -3		#program_29 
+sltiu x1, x1, -5	
+
+addi x1, x0, 1
+slli x1, x1, 31		#program_30 
+
+addi x1, x0, 1
+slli x1, x1, 31
+srli x1, x1, 31		#program_31 
+
+addi x1, x0, 1
+slli x1, x1, 31
+srai x1, x1, 31		#program_32 
+
+addi x1, x0, 1
+slli x1, x1, 30
+srai x1, x1, 30		#program_33 
+
+addi x1, x0, 0xff
+addi x2, x0, 4
+sb x1, 0(x2)
+addi x1, x0, 0
+lb x1, 0(x2)		#program_34 
+
+addi x1, x0, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+addi x2, x0, 4
+sw x1, 0(x2)
+addi x1, x0, 0
+lw x1, 0(x2)		#program_35 
+
+addi x1, x0, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+addi x2, x0, 4
+sw x1, 0(x2)
+addi x1, x0, 0
+lw x1, 0(x2)		#program_36 
+
+addi x1, x0, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+sh x1, 0(x2)
+addi x1, x0, 0
+lh x1, 0(x2)		#program_37 
+
+addi x1, x0, 0xff
+sh x1, 0(x2)
+addi x1, x0, 0
+lh x1, 0(x2)		#program_38 
+
+addi x1, x0, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+sw x1, 0(x2)
+addi x1, x0, 0
+lbu x1, 0(x2)		#program_39 
+
+addi x1, x0, 0x7f
+sw x1, 0(x2)
+addi x1, x0, 0
+lbu x1, 0(x2)		#program_40 
+
+addi x1, x0, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+slli x1, x1, 8
+addi x1, x1, 0xff
+sw x1, 0(x2)
+addi x1, x0, 0
+lhu x1, 0(x2)		#program_41 
+
+addi x1, x0, 0xff
+sw x1, 0(x2)
+addi x1, x0, 0
+lhu x1, 0(x2)		#program_42 
+
+addi x1, x0, 1
+addi x2, x0, 2
+bne x1, x2, done
+addi x1, x0, 0
+done: 			#program_43
+
+addi x1, x0, 2
+addi x2, x0, 2
+bne x1, x2, done
+addi x1, x0, 0
+done: 			#program_44
+
+addi x1, x0, 1
+addi x2, x0, 1
+beq x1, x2, done
+addi x1, x0, 0
+done: 			#program_45
+
+addi x1, x0, 1
+addi x2, x0, 2
+beq x1, x2, done
+addi x1, x0, 0
+done: 			#program_46
+
+addi x1, x0, 1
+addi x2, x0, 2
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_47
+
+addi x1, x0, 2
+addi x2, x0, 1
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_48
+		
+addi x1, x0, -1
+addi x2, x0, 1
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_49
+
+addi x1, x0, 1
+addi x2, x0, -1
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_50
+
+addi x1, x0, -2
+addi x2, x0, -1
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_51
+
+addi x1, x0, -1
+addi x2, x0, -2
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_52
+
+addi x1, x0, 2
+addi x2, x0, 1
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_53
+
+addi x1, x0, 1
+addi x2, x0, 2
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_54
+
+addi x1, x0, 2
+addi x2, x0, 2
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_55
+
+addi x1, x0, 2
+addi x2, x0, -2
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_56
+
+addi x1, x0, -2
+addi x2, x0, 2
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_57
+
+addi x1, x0, -2
+addi x2, x0, -3
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_58
+
+addi x1, x0, -3
+addi x2, x0, -2
+bge x1, x2, done
+addi x1, x0, 0
+done: 			#program_59
+
+addi x1, x0, 1
+addi x2, x0, 2
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_60
+
+addi x1, x0, 2
+addi x2, x0, 1
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_61
+		
+addi x1, x0, -1
+addi x2, x0, 1
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_62
+
+addi x1, x0, 1
+addi x2, x0, -1
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_63
+
+addi x1, x0, -2
+addi x2, x0, -1
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_64
+
+addi x1, x0, -1
+addi x2, x0, -2
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_65
+
+addi x1, x0, 1
+addi x2, x0, 1
+bltu x1, x2, done
+addi x1, x0, 0
+done: 			#program_66
+
+addi x1, x0, 1
+addi x2, x0, 1
+blt x1, x2, done
+addi x1, x0, 0
+done: 			#program_67
+
+addi x1, x0, 2
+addi x2, x0, 1
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_68
+
+addi x1, x0, 1
+addi x2, x0, 2
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_69
+
+addi x1, x0, 2
+addi x2, x0, 2
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_70
+
+addi x1, x0, 2
+addi x2, x0, -2
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_71
+
+addi x1, x0, -2
+addi x2, x0, 2
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_72
+
+addi x1, x0, -2
+addi x2, x0, -3
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_73
+
+addi x1, x0, -3
+addi x2, x0, -2
+bgeu x1, x2, done
+addi x1, x0, 0
+done: 			#program_74
+
+jal x1, done
+done: 			#program 75
+
+addi x1, x0, 5
+jal x1, done
+addi x1, x0, 6
+done: 			#program_76
+
+jalr x1, x0, 4
+addi x2, x0, 1
+done: 			#program_77
+
+
+lui x1, 5
+done: 			#program_78
+
+lui x1, 0xff
+done: 			#program_79
+
+auipc x1, 0x1
+done: 			#program_80
+
+addi x1, x0, 0
+addi x2, x0, 5
+addi x1, x1, 1
+bne x1, x2, -4
+done:     		#program_81
+
+addi x1, x0, 0
+addi x2, x0, 5
+beq x1, x2, 52
+addi x1, x1, 1
+beq x1, x2, 44
+addi x1, x1, 1
+beq x1, x2, 36
+addi x1, x1, 1
+beq x1, x2, 28
+addi x1, x1, 1
+beq x1, x2, 20
+addi x1, x1, 1
+beq x1, x2, 12
+addi x1, x1, 1
+beq x1, x2, 4
+done:			#program_82
+
+addi x5, x0, 0         
+addi x6, x0, 1         
+addi x7, x0, 1000     
+add x1, x5, x6      
+blt x1, x7, 8         
+beq x0, x0, 16        
+add x5, x6, x0       
+add x6, x1, x0       
+beq x0, x0, -20   
+done:			#program_83    
+
+addi    x1, x0, 1
+addi    x2, x0, 1
+bne     x1, x2, -8
+done:			#program_84
+
+addi    x1, x0, 0
+addi    x2, x0, 1
+addi    x1, x1, 1
+beq     x1, x2, -4
+done:			#program_85
