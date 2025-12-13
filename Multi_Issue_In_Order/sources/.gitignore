@@ -1,0 +1,18 @@
+# Vivado temporary and build files
+*.jou
+*.log
+*.str
+*.pb
+*.csv
+*.wdb
+*.dcp
+*.html
+*.xml
+*.xpr
+*.runs/
+*.cache/
+*.sim/
+.hw/
+.ip_user_files/
+.Xil/
+
