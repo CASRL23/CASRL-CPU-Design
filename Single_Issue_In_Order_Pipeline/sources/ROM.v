@@ -7,7 +7,7 @@ module ROM(
     reg [31:0] mem [0:32767];
 
     initial begin
-        $readmemh("program.mem", mem);
+        $readmemh("addition with thousand from risc-v builder.mem", mem);
     end
     
     // Synchronous read (good for block RAM inference)

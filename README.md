@@ -20,6 +20,9 @@ All of these cores use a ROM initialized at synthesis to run programs. BEfore st
 ### Note 
 Vivado versions before 2025.2 do _not_ recognize changes in these .mem program files as changes that invalidate the current bitstream. If you are running Vivado 2025.1 or earlier, if you change the contents of a .mem file, you must manually click _Run Synthesis_. Vivado will then tell you that "Synthesis has already been run and is up to date" this is **_false_** and is a bug that has been fixed in version 2025.2
  
+# archive folder
+This folder is for projects that got disconnected from this github but is more upto date code from the lab pc so all files can be organized and updated to make sure everything functions.
+
 # Single Cycle
 This directory includes the Verilog source files and testbench files for a single cycle core design. 
 
@@ -31,9 +34,10 @@ The pipeline stages are as follows: Instruction Fetch, Instruction Decode, Execu
 This directory includes the Verilog source files and testbench files for a 5-stage 4-issue width in-order pipeline implementation. This implementation has the same pipeline stages as the single issue in-order pipeline, but the Instruction Fetch, Instruction Decode, Execute, and Register Writeback stages have an issue width of four, The memory stage still have a single issue width.
 
 # Single Issue Out-of-Order Pipeline
+This directory includes sources and testbenches for OoO design being single width issue for the processor design. The design is based on tumasulo's algorithm for OoO design.
 
 # Multi Issue Out-of-Order Pipeline
-
+This directory is the 4-issue width of the tumasulo's algorithm for CPU design 
 # Spur
 Spur is the name of the shell program written targeting these core designs. This shell is written entirley in RISC-V assembly, and is intended to prove the following commands:
 

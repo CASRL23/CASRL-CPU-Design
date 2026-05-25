@@ -1,8 +1,16 @@
 `timescale 10ns/1ps
+
+// Top-level module with UART
 module Pipeline_CPU(
     output wire Done,
     output wire [31:0] Display_out,
-    input wire Clk, Reset    
+    input wire Clk, Reset,
+    
+    // UART interface
+    output wire [7:0] UART_tx_byte,
+    output wire UART_transmit_signal,
+    input wire [7:0] UART_rx_byte,
+    input wire [31:0] UART_status
 );
 
 wire [64:0] FD_wire, FD_out;
@@ -48,7 +56,7 @@ FD_pipeline FD_reg (
 DECODE decode_stage (
         .Clk(Clk),
         .Reset(Reset),
-        .E_branch(EM_out[175]),         // Branch signals from Execute Stage
+        .E_branch(EM_out[175]),
         .E_valid_branch(EM_out[178]),
         .E_branch_predict(EM_out[179]),
         .WB_en(WB_en),
@@ -98,7 +106,11 @@ EM_pipeline EM_reg (
 MEMORY memory_stage (
         .Clk(Clk),
         .EM_in(EM_out),
-        .MW_out(MW_wire)
+        .MW_out(MW_wire),
+        .UART_tx_byte(UART_tx_byte),
+        .UART_transmit_signal(UART_transmit_signal),
+        .UART_rx_byte(UART_rx_byte),
+        .UART_status(UART_status)
     );
 
 // Memory-Writeback Pipeline Reg
@@ -123,7 +135,9 @@ WRITEBACK writeback_stage (
     );
 endmodule
 
-// Modules
+// ================================================================================================================
+// FETCH Module (unchanged)
+// ================================================================================================================
 module FETCH (
     input wire Clk, Reset, PC_enable, Fetch_done, 
     input wire [179:0] EM_out,
@@ -135,10 +149,7 @@ module FETCH (
     wire Pred_taken;
     wire [31:0] Pred_target;
     
-    // Compute correct PC based on actual branch outcome
     wire [31:0] PC_misprediction_correction = EM_out[175] ? EM_out[174:143] : (EM_out[110:79] + 32'd4);
-    
-    // Detect misprediction 
     wire Misprediction = (EM_out[178] && (EM_out[179] != EM_out[175]));
     
     Branch_predictor bp (
@@ -147,41 +158,41 @@ module FETCH (
         .PC(PC),
         .Pred_taken(Pred_taken),
         .Pred_target(Pred_target),
-        .Update_en(EM_out[178]),               // actual branch resolved
-        .Update_taken(EM_out[175]),            // real outcome of branch
-        .Update_pc(EM_out[110:79]),            // PC of the branch instr. from EXE
-        .Update_target(EM_out[174:143])        // branch target
+        .Update_en(EM_out[178] && !EM_out[70]),
+        .Update_taken(EM_out[175]),
+        .Update_pc(EM_out[110:79]),
+        .Update_target(EM_out[174:143])
     );
     
     Fetch_unit fu (
         .Clk(Clk),
         .Reset(Reset),
         .Pc_enable(PC_enable),
-        .Jalr(EM_out[70]),       
         .Fetch_done(Fetch_done),
         .Pred_taken(Pred_taken),
         .Misprediction(Misprediction),          
         .Pred_target(Pred_target),
-        .Jalr_target(EM_out[174:143]),
         .PC_current(PC),
         .Branch_target(EM_out[174:143]),
         .PC_correction(PC_misprediction_correction),  
         .PC(PC)
     );
 
-    // ROM
     ROM rom (
         .Pc(PC),
         .Instruction(Instruction)
     );
     
     assign FD_out = {
-        Pred_taken,    // 64
-        Instruction,   // [63:32]
-        PC             // [31:0]
+        Pred_taken,
+        Instruction,
+        PC
     };
 endmodule
 
+// ================================================================================================================
+// DECODE Module (unchanged)
+// ================================================================================================================
 module DECODE (
     input  wire Clk, Reset, WB_en, E_branch, E_valid_branch, E_branch_predict,
     input wire [31:0] WB_data,
@@ -192,12 +203,10 @@ module DECODE (
     output wire PC_write, FD_write, FD_flush, DE_flush, 
     output wire [31:0] Display_out
 );
-    // Get Values from Pipeline Register
     wire Pred_taken = FD_in[64];
     wire [31:0] Instruction = FD_in[63:32];
     wire [31:0] PC = FD_in[31:0];
     
-    // Internal Wires
     wire [31:0] Immediate, Read_data1, Read_data2;
     wire [4:0]  Read_reg1, Read_reg2, Write_reg;
     wire [3:0]  Alu_opcode;
@@ -207,7 +216,6 @@ module DECODE (
     wire ALU_operation, Done;
     wire Stall;
     
-    // Control Unit
     Control_Unit cu (
         .Reset(Reset),
         .Instruction(Instruction),
@@ -238,7 +246,6 @@ module DECODE (
         .ALU_operation(ALU_operation)
     );
 
-    // Register File
     Reg_file rf (
         .Clk(Clk),
         .Reset(Reset),
@@ -247,9 +254,9 @@ module DECODE (
         .Display_out(Display_out),
         .Read_reg1(Read_reg1),
         .Read_reg2(Read_reg2),
-        .Write_reg(WB_addr),            // Write Register from Writeback Stage
-        .Data_in(WB_data),              // Write Data from Writeback Stage
-        .WB_en(WB_en)                   // Writeback Enable from Writeback Stage
+        .Write_reg(WB_addr),
+        .Data_in(WB_data),
+        .WB_en(WB_en)
     );
     
     Hazard_detection hd (
@@ -257,9 +264,9 @@ module DECODE (
         .DE_Rd(DE_outin[110:106]),
         .FD_Rs1(Read_reg1),
         .FD_Rs2(Read_reg2),
-        .E_branch(E_branch),                // From execute stage
-        .E_pred_taken(E_branch_predict),    //Prediction from Fetch stage
-        .E_valid_branch(E_valid_branch),    // From execute stage
+        .E_branch(E_branch),
+        .E_pred_taken(E_branch_predict),
+        .E_valid_branch(E_valid_branch),
         .PC_write(PC_write),
         .FD_write(FD_write),
         .FD_flush(FD_flush),
@@ -268,58 +275,59 @@ module DECODE (
     );
     
     assign DE_out = (Stall) ? {
-        Pred_taken,         // 166
-        Done,               // 165    
-        PC,                 // [164:133]
-        18'b0,              // All Control Signals
-        Alu_opcode,         // [114:111]
-        Write_reg,          // [110:106]
-        Read_reg2,          // [105:101]
-        Read_reg1,          // [100:96]
-        Immediate,          // [95:64]
-        Read_data2,         // [63:32]
-        Read_data1          // [31:0]         
+        Pred_taken,
+        Done,
+        PC,
+        18'b0,
+        Alu_opcode,
+        Write_reg,
+        Read_reg2,
+        Read_reg1,
+        Immediate,
+        Read_data2,
+        Read_data1
     } : {
-        Pred_taken,         // 166
-        Done,               // 165
-        PC,                 // [164:133]
-        RegWrite,           // 132
-        Unsigned,           // 131      
-        Word,               // 130
-        Half,               // 129
-        Byte,               // 128
-        Store,              // 127
-        Load,               // 126
-        Bgeu,               // 125
-        Bltu,               // 124
-        Bge,                // 123
-        Blt,                // 122
-        Bne,                // 121
-        Beq,                // 120
-        Lui,                // 119
-        Auipc,              // 118
-        Jalr,               // 117
-        Jal,                // 116
-        Immediate_enable,   // 115
-        Alu_opcode,         // [114:111]
-        Write_reg,          // [110:106]
-        Read_reg2,          // [105:101]
-        Read_reg1,          // [100:96]
-        Immediate,          // [95:64]
-        Read_data2,         // [63:32]
-        Read_data1          // [31:0]         
+        Pred_taken,
+        Done,
+        PC,
+        RegWrite,
+        Unsigned,
+        Word,
+        Half,
+        Byte,
+        Store,
+        Load,
+        Bgeu,
+        Bltu,
+        Bge,
+        Blt,
+        Bne,
+        Beq,
+        Lui,
+        Auipc,
+        Jalr,
+        Jal,
+        Immediate_enable,
+        Alu_opcode,
+        Write_reg,
+        Read_reg2,
+        Read_reg1,
+        Immediate,
+        Read_data2,
+        Read_data1
     };
 endmodule
 
+// ================================================================================================================
+// EXECUTE Module (unchanged)
+// ================================================================================================================
 module EXECUTE (
     input  wire Clk, Reset,
     input  wire [166:0] DE_in,
-    input  wire [179:0] EM_outin,       // Used for Forwarding
-    input  wire [171:0] MW_out,         // Used for Forwarding
+    input  wire [179:0] EM_outin,
+    input  wire [171:0] MW_out,
     output wire [179:0] EM_out  
 );
-    
-    // Get Values from Pipeline Register
     wire Branch_predict = DE_in[166];
     wire Done = DE_in[165];
     wire [31:0] PC = DE_in[164:133];
@@ -354,10 +362,8 @@ module EXECUTE (
     wire [1:0] ForwardA, ForwardB;
     reg Branch;
     
-    // Assigning 
-    assign Branch_target = Jalr ? Op1 + Immediate : PC + Immediate;  // This is also used for AUIPC
+    assign Branch_target = Jalr ? Immediate + Op1 : PC + Immediate;
     
-    // Used for WB Forwarding Data
     wire WB_Jal = MW_out[169];
     wire WB_Jalr = MW_out[168];
     wire WB_Load = MW_out[167];
@@ -371,13 +377,12 @@ module EXECUTE (
     wire [31:0] WB_data;
     wire Branch_valid = Beq | Bne | Blt | Bge | Bltu | Bgeu | Jalr | Jal;
     
-    // WB data mux (combinational)
     assign WB_data =
         WB_Load   ? WB_RAM_out    :
         (WB_Jalr || WB_Jal) ? WB_PC_plus4  :
         WB_Lui    ? WB_Immediate  :
         WB_Auipc  ? WB_Branch_target :
-        WB_Alu_result;  // default
+        WB_Alu_result;
     
     Forwarding_unit fu (
         .EX_MEM_RegWrite(EM_outin[176]),
@@ -390,21 +395,17 @@ module EXECUTE (
         .ForwardB(ForwardB)
     );
   
-    // Operand A
-    assign Op1 = (ForwardA == 2'b01) ? EM_outin[31:0] :         // from EX/MEM ALU
-                  (ForwardA == 2'b10) ? WB_data       :         // from WB stage
-                  Read_data1;                                   // default (register file)
+    assign Op1 = (ForwardA == 2'b01) ? EM_outin[31:0] :
+                  (ForwardA == 2'b10) ? WB_data       :
+                  Read_data1;
     
-    // Operand B 
     wire [31:0] Forwarded_Rs2 = 
-        (ForwardB == 2'b01) ? EM_outin[31:0] :  // from EX/MEM ALU
-        (ForwardB == 2'b10) ? WB_data :         // from WB Stage
-        Read_data2;                             // default
+        (ForwardB == 2'b01) ? EM_outin[31:0] :
+        (ForwardB == 2'b10) ? WB_data :
+        Read_data2;
 
-    // Immediate takes priority
     assign Op2 = (Immediate_enable) ? Immediate : Forwarded_Rs2;    
     
-    // ALU
     Alu alu (
         .Op1(Op1),
         .Op2(Op2),
@@ -412,7 +413,6 @@ module EXECUTE (
         .Alu_op(Alu_opcode)
     );
    
-    //This section holds the decision logic for the fetch unit
     always @(Jal or Jalr or Bne or Bge or Blt or Beq or Bgeu or Bltu or Alu_result) begin
         if (Jal == 1'b1 || Jalr == 1'b1) begin
             Branch = 1'b1;
@@ -429,7 +429,7 @@ module EXECUTE (
         else if (Beq == 1'b1 && Alu_result == 32'h0000000) begin
             Branch = 1'b1;    
         end
-        else if (Bgeu == 1'b1 && Alu_result[0] == 1'b0) begin   // Uses SLTU to check for branch
+        else if (Bgeu == 1'b1 && Alu_result[0] == 1'b0) begin
             Branch = 1'b1;    
         end
         else if (Bltu == 1'b1 && Alu_result[0] == 1'b1) begin
@@ -441,34 +441,43 @@ module EXECUTE (
     end
 
     assign EM_out = {
-        Branch_predict, // 179
-        Branch_valid,   // 178
-        Done,           // 177
-        RegWrite,       // 176
-        Branch,         // 175
-        Branch_target,  // [174:143]
-        Immediate,      // [142:111]
-        PC,             // [110:79]
-        Unsigned,       // 78
-        Word,           // 77
-        Half,           // 76
-        Byte,           // 75
-        Store,          // 74
-        Load,           // 73
-        Lui,            // 72
-        Auipc,          // 71
-        Jalr,           // 70
-        Jal,            // 69
-        Write_reg,      // [68:64]
-        Forwarded_Rs2,  // [63:32] *Read_data_Rs2
-        Alu_result      // [31:0]     
+        Branch_predict,
+        Branch_valid,
+        Done,
+        RegWrite,
+        Branch,
+        Branch_target,
+        Immediate,
+        PC,
+        Unsigned,
+        Word,
+        Half,
+        Byte,
+        Store,
+        Load,
+        Lui,
+        Auipc,
+        Jalr,
+        Jal,
+        Write_reg,
+        Forwarded_Rs2,
+        Alu_result
     };
 endmodule
 
+// ================================================================================================================
+// MEMORY Module (WITH UART)
+// ================================================================================================================
 module MEMORY (
     input  wire Clk,
     input  wire [179:0] EM_in,
-    output wire [171:0] MW_out
+    output wire [171:0] MW_out,
+    
+    // UART interface
+    output wire [7:0] UART_tx_byte,
+    output wire UART_transmit_signal,
+    input wire [7:0] UART_rx_byte,
+    input wire [31:0] UART_status
 );  
     wire Done = EM_in[177];
     wire RegWrite = EM_in[176];
@@ -490,7 +499,8 @@ module MEMORY (
     wire [31:0] Alu_result = EM_in[31:0];
     
     wire [31:0] RAM_out;
-    // RAM
+    
+    // RAM with UART
     RAM ram (
         .Clk(Clk),
         .Address(Alu_result),
@@ -500,27 +510,33 @@ module MEMORY (
         .Byte(Byte),
         .Word(Word),
         .Half(Half),
-        .Unsigned(Unsigned)
+        .Unsigned(Unsigned),
+        .UART_TX_Byte(UART_tx_byte),
+        .UART_transmit_signal(UART_transmit_signal),
+        .UART_RX_Byte(UART_rx_byte),
+        .UART_status(UART_status)
     );
 
     assign MW_out = {
-        Done,           // 171
-        RegWrite,       // 170 - WB_en
-        Jal,            // 169
-        Jalr,           // 168
-        Load,           // 167
-        Lui,            // 166
-        Auipc,          // 165
-        Write_reg,      // [164:160] - WB_addr
-        Branch_target,  // [159:128]
-        Immediate,      // [127:96]
-        PC,             // [95:64]
-        EM_in[31:0],    // [63:32] - ALU result
-        RAM_out         // [31:0]
+        Done,
+        RegWrite,
+        Jal,
+        Jalr,
+        Load,
+        Lui,
+        Auipc,
+        Write_reg,
+        Branch_target,
+        Immediate,
+        PC,
+        EM_in[31:0],
+        RAM_out
     };
-
 endmodule
 
+// ================================================================================================================
+// WRITEBACK Module (unchanged)
+// ================================================================================================================
 module WRITEBACK (
     input wire Clk, Reset,
     input  wire [171:0] MW_in,
@@ -548,6 +564,7 @@ module WRITEBACK (
                      Lui   ? Immediate   :
                      Auipc ? Branch_target :
                              Alu_result;
+                             
      always @(posedge Clk or posedge Reset) begin
         if (Reset)
             done_reg <= 1'b0;
@@ -555,8 +572,6 @@ module WRITEBACK (
             done_reg <= 1'b1;
      end
      
-     assign Done = done_reg;  
-     // Disable later writebacks if an earlier "done" is set
+     assign Done = done_reg;
      assign WB_en = MW_in[170] && !Done;
-     
 endmodule

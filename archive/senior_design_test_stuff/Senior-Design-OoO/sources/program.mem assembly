@@ -1,0 +1,94 @@
+program.mem assembly	
+	00500093 - addi x1,  x0, 5
+	00a00113 - addi x2,  x0, 10
+	00f00193 - addi x3,  x0, 15
+	01400213 - addi x4,  x0, 20
+16	401102b3 - sub  x5,  x2, x1      * Fowarding from first block
+	0041f333 - and  x6,  x3, x4
+	0020e3b3 - or   x7,  x1, x2
+	0041c433 - xor  x8,  x3, x4
+32 	000094b3 - sll  x9,  x1, x0
+	00025533 - srl  x10, x4, x0
+	01900593 - addi x11, x0, 25
+	0030a633 - slt  x12, x1, x3
+48	03200693 - addi x13, x0, 50
+	06400713 - addi x14, x0, 100
+	00e687b3 - add  x15, x13, x14
+	ff678813 - addi x16, x15, -10
+64	010888b3 - add  x17, x17, x16      	# depends on prev block (x16)
+	00190913 - addi x18, x18, 1
+	00299993 - slli x19, x19, 2 
+	40320a33 - sub  x20, x4,  x3       
+80	014a0a93 - addi x21, x20, 20       	# depends on prev instr
+	005b0b33 - add  x22, x22, x5       
+	001c1bb3 - sll  x23, x24, x1 
+	0066dc13 - srli x24, x13, 0x6   
+96	024ccc93 - xori x25, x25, 0x24     	# block has a RAR and a WAR Hazard
+	0186cc13 - xori x24, x13, 0x18    
+	01aafc93 - andi x25, x21, 0x1a    	# depends on x21 from prev block 
+	01bbed13 - ori  x26, x23, 0x1b     	# depends on x23 from prev block 
+112	01aa2d93 - slti x27, x20, 0x1a   
+	006eae33 - slt  x28, x29, x6       
+	00ee6eb3 - or   x29, x28, x14      	# depends on prev instr
+	0fff0f13 - addi x30, x30, 0xff 
+128	01dfcfb3 - xor  x31, x31, x29      	# depends on x29 from prev block
+	00129113 - slli x2,  x5,  1        
+	00231293 - slli x5,  x6,  2  
+	40340333 - sub  x6,  x8,  x3
+144	00e687b3 - add  x15, x13, x14       # x15 = 150
+	00a70813 - addi x16, x14, 10        # x16 = 110
+	1f078a63 - beq  x15, x16, .+500     # not taken (150 ≠ 110)
+	03079263 - bne  x15, x16, .+36      # taken (150 ≠ 110) --> 156 + 36 = 192
+160	00100793 - addi x15, x0, 1          # x15 = 1
+	00100813 - addi x16, x0, 1          # x16 = 1
+	1f079a63 - bne  x15, x16, .+500     # not taken (1 == 1)
+	03078263 - beq  x15, x16, .+36      # taken (1 == 1) --> 172 + 36 = 208
+176	00f00693 - addi x13, x0, 15         # x13 = 15
+	00a00713 - addi x14, x0, 10         # x14 = 10
+	1ee6ca63 - blt  x13, x14, .+500     # not taken (15 !< 10)
+	fee6d2e3 - bge  x13, x14, .-28      # taken (15 ≥ 10) --> 188 - 28 = 160
+192	00a00693 - addi x13, x0, 10         # x13 = 10
+	00f00713 - addi x14, x0, 15         # x14 = 15
+	1ee6fa63 - bgeu x13, x14, .+500     # not taken (10 !≥ 15 unsigned) 
+	fee6e2e3 - bltu x13, x14, .-28     	# taken (10 < 15 unsigned) --> 204 - 28 = 176
+208 0aa00593 - addi x11, x0, 0xaa      	# base address for stores
+    00400613 - addi x12, x0, 4       
+    00b00513 - addi x10, x0, 11      
+    00100713 - addi x14, x0, 1  
+224 00a5a023 - sw x10, 0(x11)			# store 11 at address in x11 (170 Decimal)
+	00c5a223 - sw x12, 4(x11)			# store 4 at address x11 +4
+	0005a683 - lw x13, 0(x11)			# load back value into x13 = 11
+	0045a703 - lw x14, 4(x11)			# load back value into x14 = 4
+240	00e687b3 - add x15, x13, x14		# x15 = x13 + x14 (x15 = 11 + 4) LOAD-USE HAZARD
+	00a70813 - addi x16, x14, 10		# x16 = x14 + 10 (x16 = 14)
+	1f078a63 - beq x15, x16, .+500		# not taken (14 != 15)
+	01079a63 - bne x15, x16, +.20		# taken (14 != 15) --> 252 + 20 = 272
+256	3e700093 - addi x1, x0, 999			# shouldn't execute
+	3e700113 - addi x2, x0, 999
+	3e700193 - addi x3, x0, 999
+	3e700213 - addi x4, x0, 999
+272	0005aa83 - lw x21, 0(x11) 			# x21 = 11
+	0005ab03 - lw x22, 0(x11) 			# x22 = 11
+	016a8bb3 - add x23, x21, x22		# x23 = x21 + x22 (x23 = 11 + 11) LOAD-USE HAZARD
+	0175a423 - sw x23, 8(x11)			# store sum back to memory 
+288	00100c13 - addi x24, x0, 1			# final independent instruction 
+	00200c93 - addi x25, x0, 2 
+	00300d13 - addi x26, x0, 3 
+	00400d93 - addi x27, x0, 4 
+304	00f00293 - addi x5, x0, 15 			# x5 = 15 (branch counter)
+	00130313 - addi x6, x6, 1
+	fff28293 - addi x5, x5, -1			# decrement x5
+	fe029ce3 - bne x5, x0, .-8			# taken after 15 branches (x5 = 0)
+320	01800c13 - addi x24, x0, 24         # shouldn't execute until x5 = 0
+	01900c93 - addi x25, x0, 25
+	01a00d13 - addi x26, x0, 26
+	01b00d93 - addi x27, x0, 27
+336	00f00293 - addi x5, x0, 15        # x5 = 15
+	fff28293 - addi x5, x5, -1        # x5--
+	00029463 - bne x5, x0, .+8        # FORWARD branch to 356
+	06400313 - addi x6, x0, 100       # (skip during loop)
+352	fe029ae3 - bge x5, x0, .-12       # BACKWARD branch to 340
+
+
+
+

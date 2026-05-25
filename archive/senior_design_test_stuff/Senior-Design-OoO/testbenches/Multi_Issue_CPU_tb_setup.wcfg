@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="Multi_Issue_CPU_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Multi_Issue_CPU_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="3,032.697 ns"></ZoomStartTime>
+      <ZoomEndTime time="3,132.898 ns"></ZoomEndTime>
+      <Cursor1Time time="605.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="247"></NameColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="15" />
+   <wvobject fp_name="/Multi_Issue_CPU_tb/Clk" type="logic">
+      <obj_property name="ElementShortName">Clk</obj_property>
+      <obj_property name="ObjectShortName">Clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Multi_Issue_CPU_tb/i" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+      <obj_property name="label">Cycles</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Multi_Issue_CPU_tb/Reset" type="logic">
+      <obj_property name="ElementShortName">Reset</obj_property>
+      <obj_property name="ObjectShortName">Reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Multi_Issue_CPU_tb/Done" type="logic">
+      <obj_property name="ElementShortName">Done</obj_property>
+      <obj_property name="ObjectShortName">Done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Multi_Issue_CPU_tb/Display_out" type="array">
+      <obj_property name="ElementShortName">Display_out[31:0]</obj_property>
+      <obj_property name="ObjectShortName">Display_out[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="group6228" type="group">
+      <obj_property name="label">Fetch PC &amp; Instr</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/PC0" type="array">
+         <obj_property name="ElementShortName">PC0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/PC1" type="array">
+         <obj_property name="ElementShortName">PC1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/PC2" type="array">
+         <obj_property name="ElementShortName">PC2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/PC3" type="array">
+         <obj_property name="ElementShortName">PC3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="group5293" type="group">
+         <obj_property name="label">Fetch Instr</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/Instr0" type="array">
+            <obj_property name="ElementShortName">Instr0[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instr0[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/Instr1" type="array">
+            <obj_property name="ElementShortName">Instr1[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instr1[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/Instr2" type="array">
+            <obj_property name="ElementShortName">Instr2[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instr2[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIR/Instr3" type="array">
+            <obj_property name="ElementShortName">Instr3[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instr3[31:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/Num_issued" type="array">
+         <obj_property name="ElementShortName">Num_issued[2:0]</obj_property>
+         <obj_property name="ObjectShortName">Num_issued[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group6457" type="group">
+      <obj_property name="label">Branch Predictor Sig</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIBP/PC0" type="array">
+         <obj_property name="ElementShortName">PC0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIBP/PC1" type="array">
+         <obj_property name="ElementShortName">PC1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIBP/PC2" type="array">
+         <obj_property name="ElementShortName">PC2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIBP/PC3" type="array">
+         <obj_property name="ElementShortName">PC3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/Pred_taken0" type="logic">
+         <obj_property name="ElementShortName">Pred_taken0</obj_property>
+         <obj_property name="ObjectShortName">Pred_taken0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/Pred_taken1" type="logic">
+         <obj_property name="ElementShortName">Pred_taken1</obj_property>
+         <obj_property name="ObjectShortName">Pred_taken1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/Pred_taken2" type="logic">
+         <obj_property name="ElementShortName">Pred_taken2</obj_property>
+         <obj_property name="ObjectShortName">Pred_taken2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/Pred_taken3" type="logic">
+         <obj_property name="ElementShortName">Pred_taken3</obj_property>
+         <obj_property name="ObjectShortName">Pred_taken3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIFU/Pred_miss" type="array">
+         <obj_property name="ElementShortName">Pred_miss[3:0]</obj_property>
+         <obj_property name="ObjectShortName">Pred_miss[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIFU/Miss_target0" type="array">
+         <obj_property name="ElementShortName">Miss_target0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Miss_target0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIFU/Miss_target1" type="array">
+         <obj_property name="ElementShortName">Miss_target1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Miss_target1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIFU/Miss_target2" type="array">
+         <obj_property name="ElementShortName">Miss_target2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Miss_target2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Fetch_Stage/MIFU/Miss_target3" type="array">
+         <obj_property name="ElementShortName">Miss_target3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Miss_target3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group6003" type="group">
+      <obj_property name="label">Decode PCs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/PC_0" type="array">
+         <obj_property name="ElementShortName">PC_0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC_0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/PC_1" type="array">
+         <obj_property name="ElementShortName">PC_1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC_1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/PC_2" type="array">
+         <obj_property name="ElementShortName">PC_2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC_2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/PC_3" type="array">
+         <obj_property name="ElementShortName">PC_3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC_3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="group5390" type="group">
+         <obj_property name="label">Decode Instr</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Instruction_0" type="array">
+            <obj_property name="ElementShortName">Instruction_0[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instruction_0[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Instruction_1" type="array">
+            <obj_property name="ElementShortName">Instruction_1[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instruction_1[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Instruction_2" type="array">
+            <obj_property name="ElementShortName">Instruction_2[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instruction_2[31:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Instruction_3" type="array">
+            <obj_property name="ElementShortName">Instruction_3[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Instruction_3[31:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Pred_take0" type="logic">
+         <obj_property name="ElementShortName">Pred_take0</obj_property>
+         <obj_property name="ObjectShortName">Pred_take0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Pred_take1" type="logic">
+         <obj_property name="ElementShortName">Pred_take1</obj_property>
+         <obj_property name="ObjectShortName">Pred_take1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Pred_take2" type="logic">
+         <obj_property name="ElementShortName">Pred_take2</obj_property>
+         <obj_property name="ObjectShortName">Pred_take2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Pred_take3" type="logic">
+         <obj_property name="ElementShortName">Pred_take3</obj_property>
+         <obj_property name="ObjectShortName">Pred_take3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Num_issued" type="array">
+         <obj_property name="ElementShortName">Num_issued[2:0]</obj_property>
+         <obj_property name="ObjectShortName">Num_issued[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/Num_issued_prev" type="array">
+         <obj_property name="ElementShortName">Num_issued_prev[2:0]</obj_property>
+         <obj_property name="ObjectShortName">Num_issued_prev[2:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group7355" type="group">
+      <obj_property name="label">Hazard Detection Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Flush" type="logic">
+         <obj_property name="ElementShortName">Flush</obj_property>
+         <obj_property name="ObjectShortName">Flush</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_MemRead0" type="logic">
+         <obj_property name="ElementShortName">DE_MemRead0</obj_property>
+         <obj_property name="ObjectShortName">DE_MemRead0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_MemRead1" type="logic">
+         <obj_property name="ElementShortName">DE_MemRead1</obj_property>
+         <obj_property name="ObjectShortName">DE_MemRead1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_MemRead2" type="logic">
+         <obj_property name="ElementShortName">DE_MemRead2</obj_property>
+         <obj_property name="ObjectShortName">DE_MemRead2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_MemRead3" type="logic">
+         <obj_property name="ElementShortName">DE_MemRead3</obj_property>
+         <obj_property name="ObjectShortName">DE_MemRead3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs1_0" type="array">
+         <obj_property name="ElementShortName">FD_Rs1_0[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs1_0[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs2_0" type="array">
+         <obj_property name="ElementShortName">FD_Rs2_0[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs2_0[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rd0" type="array">
+         <obj_property name="ElementShortName">FD_Rd0[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rd0[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_Rd0" type="array">
+         <obj_property name="ElementShortName">DE_Rd0[4:0]</obj_property>
+         <obj_property name="ObjectShortName">DE_Rd0[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs1_1" type="array">
+         <obj_property name="ElementShortName">FD_Rs1_1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs1_1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs2_1" type="array">
+         <obj_property name="ElementShortName">FD_Rs2_1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs2_1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rd1" type="array">
+         <obj_property name="ElementShortName">FD_Rd1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rd1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_Rd1" type="array">
+         <obj_property name="ElementShortName">DE_Rd1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">DE_Rd1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs1_2" type="array">
+         <obj_property name="ElementShortName">FD_Rs1_2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs1_2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs2_2" type="array">
+         <obj_property name="ElementShortName">FD_Rs2_2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs2_2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rd2" type="array">
+         <obj_property name="ElementShortName">FD_Rd2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rd2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_Rd2" type="array">
+         <obj_property name="ElementShortName">DE_Rd2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">DE_Rd2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs1_3" type="array">
+         <obj_property name="ElementShortName">FD_Rs1_3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs1_3[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rs2_3" type="array">
+         <obj_property name="ElementShortName">FD_Rs2_3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rs2_3[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/FD_Rd3" type="array">
+         <obj_property name="ElementShortName">FD_Rd3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">FD_Rd3[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/DE_Rd3" type="array">
+         <obj_property name="ElementShortName">DE_Rd3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">DE_Rd3[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Write3" type="logic">
+         <obj_property name="ElementShortName">Write3</obj_property>
+         <obj_property name="ObjectShortName">Write3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Write2" type="logic">
+         <obj_property name="ElementShortName">Write2</obj_property>
+         <obj_property name="ObjectShortName">Write2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Write1" type="logic">
+         <obj_property name="ElementShortName">Write1</obj_property>
+         <obj_property name="ObjectShortName">Write1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Write0" type="logic">
+         <obj_property name="ElementShortName">Write0</obj_property>
+         <obj_property name="ObjectShortName">Write0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Stall3" type="logic">
+         <obj_property name="ElementShortName">Stall3</obj_property>
+         <obj_property name="ObjectShortName">Stall3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Stall2" type="logic">
+         <obj_property name="ElementShortName">Stall2</obj_property>
+         <obj_property name="ObjectShortName">Stall2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Stall1" type="logic">
+         <obj_property name="ElementShortName">Stall1</obj_property>
+         <obj_property name="ObjectShortName">Stall1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIHC/Stall0" type="logic">
+         <obj_property name="ElementShortName">Stall0</obj_property>
+         <obj_property name="ObjectShortName">Stall0</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group5906" type="group">
+      <obj_property name="label">Registers</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x1_out" type="array">
+         <obj_property name="ElementShortName">x1_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x1_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x2_out" type="array">
+         <obj_property name="ElementShortName">x2_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x2_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x3_out" type="array">
+         <obj_property name="ElementShortName">x3_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x3_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x4_out" type="array">
+         <obj_property name="ElementShortName">x4_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x4_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x5_out" type="array">
+         <obj_property name="ElementShortName">x5_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x5_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x6_out" type="array">
+         <obj_property name="ElementShortName">x6_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x6_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x7_out" type="array">
+         <obj_property name="ElementShortName">x7_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x7_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x8_out" type="array">
+         <obj_property name="ElementShortName">x8_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x8_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x9_out" type="array">
+         <obj_property name="ElementShortName">x9_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x9_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x10_out" type="array">
+         <obj_property name="ElementShortName">x10_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x10_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x11_out" type="array">
+         <obj_property name="ElementShortName">x11_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x11_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x12_out" type="array">
+         <obj_property name="ElementShortName">x12_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x12_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x13_out" type="array">
+         <obj_property name="ElementShortName">x13_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x13_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x14_out" type="array">
+         <obj_property name="ElementShortName">x14_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x14_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x15_out" type="array">
+         <obj_property name="ElementShortName">x15_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x15_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x16_out" type="array">
+         <obj_property name="ElementShortName">x16_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x16_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x17_out" type="array">
+         <obj_property name="ElementShortName">x17_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x17_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x18_out" type="array">
+         <obj_property name="ElementShortName">x18_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x18_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x19_out" type="array">
+         <obj_property name="ElementShortName">x19_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x19_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x20_out" type="array">
+         <obj_property name="ElementShortName">x20_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x20_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x21_out" type="array">
+         <obj_property name="ElementShortName">x21_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x21_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x22_out" type="array">
+         <obj_property name="ElementShortName">x22_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x22_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x23_out" type="array">
+         <obj_property name="ElementShortName">x23_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x23_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x24_out" type="array">
+         <obj_property name="ElementShortName">x24_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x24_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x25_out" type="array">
+         <obj_property name="ElementShortName">x25_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x25_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x26_out" type="array">
+         <obj_property name="ElementShortName">x26_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x26_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x27_out" type="array">
+         <obj_property name="ElementShortName">x27_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x27_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x28_out" type="array">
+         <obj_property name="ElementShortName">x28_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x28_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x29_out" type="array">
+         <obj_property name="ElementShortName">x29_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x29_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x30_out" type="array">
+         <obj_property name="ElementShortName">x30_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x30_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Decode_Stage/MIRF/x31_out" type="array">
+         <obj_property name="ElementShortName">x31_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">x31_out[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group188" type="group">
+      <obj_property name="label">EX Branch Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group4881" type="group">
+         <obj_property name="label">EX Branch 0 Signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_predict0" type="logic">
+            <obj_property name="ElementShortName">Branch_predict0</obj_property>
+            <obj_property name="ObjectShortName">Branch_predict0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_valid0" type="logic">
+            <obj_property name="ElementShortName">Branch_valid0</obj_property>
+            <obj_property name="ObjectShortName">Branch_valid0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch0" type="logic">
+            <obj_property name="ElementShortName">Branch0</obj_property>
+            <obj_property name="ObjectShortName">Branch0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_target0" type="array">
+            <obj_property name="ElementShortName">Branch_target0[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Branch_target0[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Beq0" type="logic">
+            <obj_property name="ElementShortName">Beq0</obj_property>
+            <obj_property name="ObjectShortName">Beq0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bgeu0" type="logic">
+            <obj_property name="ElementShortName">Bgeu0</obj_property>
+            <obj_property name="ObjectShortName">Bgeu0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bltu0" type="logic">
+            <obj_property name="ElementShortName">Bltu0</obj_property>
+            <obj_property name="ObjectShortName">Bltu0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bge0" type="logic">
+            <obj_property name="ElementShortName">Bge0</obj_property>
+            <obj_property name="ObjectShortName">Bge0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Blt0" type="logic">
+            <obj_property name="ElementShortName">Blt0</obj_property>
+            <obj_property name="ObjectShortName">Blt0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bne0" type="logic">
+            <obj_property name="ElementShortName">Bne0</obj_property>
+            <obj_property name="ObjectShortName">Bne0</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group4880" type="group">
+         <obj_property name="label">EX Branch1 Signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_predict1" type="logic">
+            <obj_property name="ElementShortName">Branch_predict1</obj_property>
+            <obj_property name="ObjectShortName">Branch_predict1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_valid1" type="logic">
+            <obj_property name="ElementShortName">Branch_valid1</obj_property>
+            <obj_property name="ObjectShortName">Branch_valid1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch1" type="logic">
+            <obj_property name="ElementShortName">Branch1</obj_property>
+            <obj_property name="ObjectShortName">Branch1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_target1" type="array">
+            <obj_property name="ElementShortName">Branch_target1[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Branch_target1[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Beq1" type="logic">
+            <obj_property name="ElementShortName">Beq1</obj_property>
+            <obj_property name="ObjectShortName">Beq1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bgeu1" type="logic">
+            <obj_property name="ElementShortName">Bgeu1</obj_property>
+            <obj_property name="ObjectShortName">Bgeu1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bltu1" type="logic">
+            <obj_property name="ElementShortName">Bltu1</obj_property>
+            <obj_property name="ObjectShortName">Bltu1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bge1" type="logic">
+            <obj_property name="ElementShortName">Bge1</obj_property>
+            <obj_property name="ObjectShortName">Bge1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Blt1" type="logic">
+            <obj_property name="ElementShortName">Blt1</obj_property>
+            <obj_property name="ObjectShortName">Blt1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bne1" type="logic">
+            <obj_property name="ElementShortName">Bne1</obj_property>
+            <obj_property name="ObjectShortName">Bne1</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group4879" type="group">
+         <obj_property name="label">EX Branch2 Signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_predict2" type="logic">
+            <obj_property name="ElementShortName">Branch_predict2</obj_property>
+            <obj_property name="ObjectShortName">Branch_predict2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_valid2" type="logic">
+            <obj_property name="ElementShortName">Branch_valid2</obj_property>
+            <obj_property name="ObjectShortName">Branch_valid2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch2" type="logic">
+            <obj_property name="ElementShortName">Branch2</obj_property>
+            <obj_property name="ObjectShortName">Branch2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_target2" type="array">
+            <obj_property name="ElementShortName">Branch_target2[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Branch_target2[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Beq2" type="logic">
+            <obj_property name="ElementShortName">Beq2</obj_property>
+            <obj_property name="ObjectShortName">Beq2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bgeu2" type="logic">
+            <obj_property name="ElementShortName">Bgeu2</obj_property>
+            <obj_property name="ObjectShortName">Bgeu2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bltu2" type="logic">
+            <obj_property name="ElementShortName">Bltu2</obj_property>
+            <obj_property name="ObjectShortName">Bltu2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bge2" type="logic">
+            <obj_property name="ElementShortName">Bge2</obj_property>
+            <obj_property name="ObjectShortName">Bge2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Blt2" type="logic">
+            <obj_property name="ElementShortName">Blt2</obj_property>
+            <obj_property name="ObjectShortName">Blt2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bne2" type="logic">
+            <obj_property name="ElementShortName">Bne2</obj_property>
+            <obj_property name="ObjectShortName">Bne2</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group4878" type="group">
+         <obj_property name="label">EX Branch3 Signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_predict3" type="logic">
+            <obj_property name="ElementShortName">Branch_predict3</obj_property>
+            <obj_property name="ObjectShortName">Branch_predict3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch3" type="logic">
+            <obj_property name="ElementShortName">Branch3</obj_property>
+            <obj_property name="ObjectShortName">Branch3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_valid3" type="logic">
+            <obj_property name="ElementShortName">Branch_valid3</obj_property>
+            <obj_property name="ObjectShortName">Branch_valid3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Branch_target3" type="array">
+            <obj_property name="ElementShortName">Branch_target3[31:0]</obj_property>
+            <obj_property name="ObjectShortName">Branch_target3[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Beq3" type="logic">
+            <obj_property name="ElementShortName">Beq3</obj_property>
+            <obj_property name="ObjectShortName">Beq3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bgeu3" type="logic">
+            <obj_property name="ElementShortName">Bgeu3</obj_property>
+            <obj_property name="ObjectShortName">Bgeu3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bltu3" type="logic">
+            <obj_property name="ElementShortName">Bltu3</obj_property>
+            <obj_property name="ObjectShortName">Bltu3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bge3" type="logic">
+            <obj_property name="ElementShortName">Bge3</obj_property>
+            <obj_property name="ObjectShortName">Bge3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Blt3" type="logic">
+            <obj_property name="ElementShortName">Blt3</obj_property>
+            <obj_property name="ObjectShortName">Blt3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Bne3" type="logic">
+            <obj_property name="ElementShortName">Bne3</obj_property>
+            <obj_property name="ObjectShortName">Bne3</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group3527" type="group">
+      <obj_property name="label">Execute PCs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/PC0" type="array">
+         <obj_property name="ElementShortName">PC0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/PC1" type="array">
+         <obj_property name="ElementShortName">PC1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/PC2" type="array">
+         <obj_property name="ElementShortName">PC2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/PC3" type="array">
+         <obj_property name="ElementShortName">PC3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">PC3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group7054" type="group">
+      <obj_property name="label">EX ALU Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op1_0" type="array">
+         <obj_property name="ElementShortName">Op1_0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op1_0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op2_0" type="array">
+         <obj_property name="ElementShortName">Op2_0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op2_0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Alu_result0" type="array">
+         <obj_property name="ElementShortName">Alu_result0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Alu_result0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op1_1" type="array">
+         <obj_property name="ElementShortName">Op1_1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op1_1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op2_1" type="array">
+         <obj_property name="ElementShortName">Op2_1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op2_1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Alu_result1" type="array">
+         <obj_property name="ElementShortName">Alu_result1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Alu_result1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op1_2" type="array">
+         <obj_property name="ElementShortName">Op1_2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op1_2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op2_2" type="array">
+         <obj_property name="ElementShortName">Op2_2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op2_2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Alu_result2" type="array">
+         <obj_property name="ElementShortName">Alu_result2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Alu_result2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op1_3" type="array">
+         <obj_property name="ElementShortName">Op1_3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op1_3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Op2_3" type="array">
+         <obj_property name="ElementShortName">Op2_3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Op2_3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Execute_Stage/Alu_result3" type="array">
+         <obj_property name="ElementShortName">Alu_result3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Alu_result3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group1412" type="group">
+      <obj_property name="label">Memory Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group511" type="group">
+         <obj_property name="label">Memory Stage Cntrl Signals</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Done_0" type="logic">
+            <obj_property name="ElementShortName">Done_0</obj_property>
+            <obj_property name="ObjectShortName">Done_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/RegWrite_0" type="logic">
+            <obj_property name="ElementShortName">RegWrite_0</obj_property>
+            <obj_property name="ObjectShortName">RegWrite_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Unsigned_0" type="logic">
+            <obj_property name="ElementShortName">Unsigned_0</obj_property>
+            <obj_property name="ObjectShortName">Unsigned_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Word_0" type="logic">
+            <obj_property name="ElementShortName">Word_0</obj_property>
+            <obj_property name="ObjectShortName">Word_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Half_0" type="logic">
+            <obj_property name="ElementShortName">Half_0</obj_property>
+            <obj_property name="ObjectShortName">Half_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Byte_0" type="logic">
+            <obj_property name="ElementShortName">Byte_0</obj_property>
+            <obj_property name="ObjectShortName">Byte_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Store_0" type="logic">
+            <obj_property name="ElementShortName">Store_0</obj_property>
+            <obj_property name="ObjectShortName">Store_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_0" type="logic">
+            <obj_property name="ElementShortName">Load_0</obj_property>
+            <obj_property name="ObjectShortName">Load_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Lui_0" type="logic">
+            <obj_property name="ElementShortName">Lui_0</obj_property>
+            <obj_property name="ObjectShortName">Lui_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Auipc_0" type="logic">
+            <obj_property name="ElementShortName">Auipc_0</obj_property>
+            <obj_property name="ObjectShortName">Auipc_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jalr_0" type="logic">
+            <obj_property name="ElementShortName">Jalr_0</obj_property>
+            <obj_property name="ObjectShortName">Jalr_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jal_0" type="logic">
+            <obj_property name="ElementShortName">Jal_0</obj_property>
+            <obj_property name="ObjectShortName">Jal_0</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Done_1" type="logic">
+            <obj_property name="ElementShortName">Done_1</obj_property>
+            <obj_property name="ObjectShortName">Done_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/RegWrite_1" type="logic">
+            <obj_property name="ElementShortName">RegWrite_1</obj_property>
+            <obj_property name="ObjectShortName">RegWrite_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Unsigned_1" type="logic">
+            <obj_property name="ElementShortName">Unsigned_1</obj_property>
+            <obj_property name="ObjectShortName">Unsigned_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Word_1" type="logic">
+            <obj_property name="ElementShortName">Word_1</obj_property>
+            <obj_property name="ObjectShortName">Word_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Half_1" type="logic">
+            <obj_property name="ElementShortName">Half_1</obj_property>
+            <obj_property name="ObjectShortName">Half_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Byte_1" type="logic">
+            <obj_property name="ElementShortName">Byte_1</obj_property>
+            <obj_property name="ObjectShortName">Byte_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Store_1" type="logic">
+            <obj_property name="ElementShortName">Store_1</obj_property>
+            <obj_property name="ObjectShortName">Store_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_1" type="logic">
+            <obj_property name="ElementShortName">Load_1</obj_property>
+            <obj_property name="ObjectShortName">Load_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Lui_1" type="logic">
+            <obj_property name="ElementShortName">Lui_1</obj_property>
+            <obj_property name="ObjectShortName">Lui_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Auipc_1" type="logic">
+            <obj_property name="ElementShortName">Auipc_1</obj_property>
+            <obj_property name="ObjectShortName">Auipc_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jalr_1" type="logic">
+            <obj_property name="ElementShortName">Jalr_1</obj_property>
+            <obj_property name="ObjectShortName">Jalr_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jal_1" type="logic">
+            <obj_property name="ElementShortName">Jal_1</obj_property>
+            <obj_property name="ObjectShortName">Jal_1</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Done_2" type="logic">
+            <obj_property name="ElementShortName">Done_2</obj_property>
+            <obj_property name="ObjectShortName">Done_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/RegWrite_2" type="logic">
+            <obj_property name="ElementShortName">RegWrite_2</obj_property>
+            <obj_property name="ObjectShortName">RegWrite_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Unsigned_2" type="logic">
+            <obj_property name="ElementShortName">Unsigned_2</obj_property>
+            <obj_property name="ObjectShortName">Unsigned_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Word_2" type="logic">
+            <obj_property name="ElementShortName">Word_2</obj_property>
+            <obj_property name="ObjectShortName">Word_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Half_2" type="logic">
+            <obj_property name="ElementShortName">Half_2</obj_property>
+            <obj_property name="ObjectShortName">Half_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Byte_2" type="logic">
+            <obj_property name="ElementShortName">Byte_2</obj_property>
+            <obj_property name="ObjectShortName">Byte_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Store_2" type="logic">
+            <obj_property name="ElementShortName">Store_2</obj_property>
+            <obj_property name="ObjectShortName">Store_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_2" type="logic">
+            <obj_property name="ElementShortName">Load_2</obj_property>
+            <obj_property name="ObjectShortName">Load_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Lui_2" type="logic">
+            <obj_property name="ElementShortName">Lui_2</obj_property>
+            <obj_property name="ObjectShortName">Lui_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Auipc_2" type="logic">
+            <obj_property name="ElementShortName">Auipc_2</obj_property>
+            <obj_property name="ObjectShortName">Auipc_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jalr_2" type="logic">
+            <obj_property name="ElementShortName">Jalr_2</obj_property>
+            <obj_property name="ObjectShortName">Jalr_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jal_2" type="logic">
+            <obj_property name="ElementShortName">Jal_2</obj_property>
+            <obj_property name="ObjectShortName">Jal_2</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Done_3" type="logic">
+            <obj_property name="ElementShortName">Done_3</obj_property>
+            <obj_property name="ObjectShortName">Done_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/RegWrite_3" type="logic">
+            <obj_property name="ElementShortName">RegWrite_3</obj_property>
+            <obj_property name="ObjectShortName">RegWrite_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Unsigned_3" type="logic">
+            <obj_property name="ElementShortName">Unsigned_3</obj_property>
+            <obj_property name="ObjectShortName">Unsigned_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Word_3" type="logic">
+            <obj_property name="ElementShortName">Word_3</obj_property>
+            <obj_property name="ObjectShortName">Word_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Half_3" type="logic">
+            <obj_property name="ElementShortName">Half_3</obj_property>
+            <obj_property name="ObjectShortName">Half_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Byte_3" type="logic">
+            <obj_property name="ElementShortName">Byte_3</obj_property>
+            <obj_property name="ObjectShortName">Byte_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Store_3" type="logic">
+            <obj_property name="ElementShortName">Store_3</obj_property>
+            <obj_property name="ObjectShortName">Store_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_3" type="logic">
+            <obj_property name="ElementShortName">Load_3</obj_property>
+            <obj_property name="ObjectShortName">Load_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Lui_3" type="logic">
+            <obj_property name="ElementShortName">Lui_3</obj_property>
+            <obj_property name="ObjectShortName">Lui_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Auipc_3" type="logic">
+            <obj_property name="ElementShortName">Auipc_3</obj_property>
+            <obj_property name="ObjectShortName">Auipc_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jalr_3" type="logic">
+            <obj_property name="ElementShortName">Jalr_3</obj_property>
+            <obj_property name="ObjectShortName">Jalr_3</obj_property>
+         </wvobject>
+         <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Jal_3" type="logic">
+            <obj_property name="ElementShortName">Jal_3</obj_property>
+            <obj_property name="ObjectShortName">Jal_3</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Store0" type="logic">
+         <obj_property name="ElementShortName">Store0</obj_property>
+         <obj_property name="ObjectShortName">Store0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_0" type="logic">
+         <obj_property name="ElementShortName">Load_0</obj_property>
+         <obj_property name="ObjectShortName">Load_0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Address0" type="array">
+         <obj_property name="ElementShortName">Address0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Address0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_in0" type="array">
+         <obj_property name="ElementShortName">Data_in0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_in0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_out0" type="array">
+         <obj_property name="ElementShortName">Data_out0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_out0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Store1" type="logic">
+         <obj_property name="ElementShortName">Store1</obj_property>
+         <obj_property name="ObjectShortName">Store1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_1" type="logic">
+         <obj_property name="ElementShortName">Load_1</obj_property>
+         <obj_property name="ObjectShortName">Load_1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Address1" type="array">
+         <obj_property name="ElementShortName">Address1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Address1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_in1" type="array">
+         <obj_property name="ElementShortName">Data_in1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_in1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_out1" type="array">
+         <obj_property name="ElementShortName">Data_out1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_out1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Store2" type="logic">
+         <obj_property name="ElementShortName">Store2</obj_property>
+         <obj_property name="ObjectShortName">Store2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_2" type="logic">
+         <obj_property name="ElementShortName">Load_2</obj_property>
+         <obj_property name="ObjectShortName">Load_2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Address2" type="array">
+         <obj_property name="ElementShortName">Address2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Address2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_in2" type="array">
+         <obj_property name="ElementShortName">Data_in2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_in2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_out2" type="array">
+         <obj_property name="ElementShortName">Data_out2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_out2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Store3" type="logic">
+         <obj_property name="ElementShortName">Store3</obj_property>
+         <obj_property name="ObjectShortName">Store3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/Load_3" type="logic">
+         <obj_property name="ElementShortName">Load_3</obj_property>
+         <obj_property name="ObjectShortName">Load_3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Address3" type="array">
+         <obj_property name="ElementShortName">Address3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Address3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_in3" type="array">
+         <obj_property name="ElementShortName">Data_in3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_in3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Memory_Stage/multi_ram/Data_out3" type="array">
+         <obj_property name="ElementShortName">Data_out3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">Data_out3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group1541" type="group">
+      <obj_property name="label">Writeback Signals</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_en0" type="logic">
+         <obj_property name="ElementShortName">WB_en0</obj_property>
+         <obj_property name="ObjectShortName">WB_en0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_addr0" type="array">
+         <obj_property name="ElementShortName">WB_addr0[4:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_addr0[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_data0" type="array">
+         <obj_property name="ElementShortName">WB_data0[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_data0[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_en1" type="logic">
+         <obj_property name="ElementShortName">WB_en1</obj_property>
+         <obj_property name="ObjectShortName">WB_en1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_addr1" type="array">
+         <obj_property name="ElementShortName">WB_addr1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_addr1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_data1" type="array">
+         <obj_property name="ElementShortName">WB_data1[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_data1[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_en2" type="logic">
+         <obj_property name="ElementShortName">WB_en2</obj_property>
+         <obj_property name="ObjectShortName">WB_en2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_addr2" type="array">
+         <obj_property name="ElementShortName">WB_addr2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_addr2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_data2" type="array">
+         <obj_property name="ElementShortName">WB_data2[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_data2[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_en3" type="logic">
+         <obj_property name="ElementShortName">WB_en3</obj_property>
+         <obj_property name="ObjectShortName">WB_en3</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_addr3" type="array">
+         <obj_property name="ElementShortName">WB_addr3[4:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_addr3[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/Multi_Issue_CPU_tb/dut/Writeback_Stage/WB_data3" type="array">
+         <obj_property name="ElementShortName">WB_data3[31:0]</obj_property>
+         <obj_property name="ObjectShortName">WB_data3[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
