@@ -1,4 +1,4 @@
-`timescale 10ns / 1ps
+`timescale 1ns / 1ps
 module CPU_1(
     output wire Done,
 //    input wire CLK_125_P,
