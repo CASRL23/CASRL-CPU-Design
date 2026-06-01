@@ -17,22 +17,24 @@ All core designs in this repository implement the RV32I base instruction set, ex
 
 # Running Software
 
-Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program.
+Each processor core is stored in its own folder based on the architecture being tested. For creating a Vivado project to test, select the source folder for the desired CPU design. Each folder contains the Verilog files and `.mem` files in test for each version of the processor. Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program, the `.mem` files must be loaded into Vivado for them to register in the ROM of any CPU Design.
 
-Before running synthesis in Vivado, choose the correct program file for the processor core being tested. For example, select the proper `.mem` program from the folder for the desired architecture, such as:
+The available processor folders may include:
 
 - Single-Issue In-Order
 - Multi-Issue In-Order
 - Single-Issue Out-of-Order
 - Multi-Issue Out-of-Order
 
-After selecting the program, update the file name inside the ROM module. In `ROM.v`, the string inside the `$readmemh()` statement must match the `.mem` file being used.
+After choosing the design folder, add the Verilog sources folder into the Vivado project, this includes the verilog code and `.mem` files. The top-level module should be set to the CPU top module for that selected architecture. The ROM is initialized during synthesis using a `.mem` file that contains the hex machine code for the program. The same `.mem` program files may be used across the different processor folders, as long as the program is compatible with the selected CPU design. To update the file name inside the ROM module, Look for the `ROM.v` file, which is in the fetch stage when looking in Vivado or the source folder, then the string inside the `$readmemh()` statement must match the `.mem` file the user wants to be used. Before running synthesis, make sure the ROM module points to the correct `.mem` file otherwise it will not work.
 
 Example:
 ```verilog```
 $readmemh("programs.mem", memory);
 ### Note 
 Vivado versions before 2025.2 do _not_ recognize changes in these .mem program files as changes that invalidate the current bitstream. If you are running Vivado 2025.1 or earlier, if you change the contents of a .mem file, you must manually click _Run Synthesis_. Vivado will then tell you that "Synthesis has already been run and is up to date" this is **_false_** and is a bug that has been fixed in version 2025.2
+
+The synthesize can take a few minutes to process depending on computer hardware, and the same for implementation taking anywhere from 20-40 minutes to be done.
  
 # archive folder
 This folder is for projects that got disconnected from this github but is more upto date code from the lab pc so all files can be organized and updated to make sure everything functions.
