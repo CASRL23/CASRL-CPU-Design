@@ -28,31 +28,51 @@ module CPU_1(
 //        .clk_in1_n(CLK_125_N)
 //      );
 
-    Pipeline_CPU PCPU(
-        .Done(Done),
-        .Clk(clk),              
-        .Reset(Reset)
-    );    
+    // UART signals
+    wire [7:0] UART_tx_byte;
+    wire [7:0] UART_rx_byte;
+    wire transmit;
+    wire received;
+    wire is_receiving;
+    wire is_transmitting;
+    wire recv_error;
+    
+    // Display output (not used but required by Pipeline_CPU)
+    wire [31:0] Display_out;
     
     //  To instantiate this module copy this section to your main code...
-
+    // UART Controller
     uart #(
-        .baud_rate(baud_rate),            // default is 9600
-        .sys_clk_freq(sys_clk_freq)       // default is 100000000
-     )
-    instance_name(
-        .clk(clk),                        // The master clock for this module
-        .rst(rst),                        // Synchronous reset
-        .rx(rx),                          // Incoming serial line
-        .tx(tx),                          // Outgoing serial line
-        .transmit(transmit),              // Signal to transmit
-        .tx_byte(tx_byte),                // Byte to transmit       
-        .received(received),              // Indicated that a byte has been received
-        .rx_byte(rx_byte),                // Byte received
-        .is_receiving(is_receiving),      // Low when receive line is idle
-        .is_transmitting(is_transmitting),// Low when transmit line is idle
-        .recv_error(recv_error)           // Indicates error in receiving packet.
-      //.recv_state(recv_state),          // for test bench
-      //.tx_state(tx_state)               // for test bench
+        .baud_rate(9600),
+        .sys_clk_freq(100000000)
+    ) uart_controller (
+        .clk(clk),              // UART runs on 100MHz
+        .rst(Reset),
+        .rx(UART_rx),
+        .tx(UART_tx),
+        .transmit(transmit),
+        .tx_byte(UART_tx_byte),
+        .received(received),
+        .rx_byte(UART_rx_byte),
+        .is_receiving(is_receiving),
+        .is_transmitting(is_transmitting),
+        .recv_error(recv_error)
     );
+
+    // UART Status register
+    wire [31:0] UART_Status;
+    assign UART_Status = {29'd0, is_receiving, is_transmitting, recv_error};
+    
+    Pipeline_CPU PCPU(
+        .Done(Done),
+        .Display_out(Display_out),     // Connect the Display_out port
+        .Clk(clk),              
+        .Reset(Reset),
+        
+        // UART connections
+        .UART_rx_byte(UART_rx_byte),
+        .UART_tx_byte(UART_tx_byte),
+        .UART_transmit_signal(transmit),
+        .UART_status(UART_Status)
+    );    
 endmodule
