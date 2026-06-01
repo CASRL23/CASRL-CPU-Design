@@ -16,7 +16,22 @@ All core designs in this repository implement the RV32I base instruction set, ex
  - fence.i
 
 # Running Software
-To run any of these codes in Vivado All of these cores use a ROM initialized at synthesis to run programs. Before starting synthesis, a .mem file is populated with the appropriate hex machine code and in the *ROM.v file the string inside of ```$readmh()``` must be updated to refect that file. The .mem file also must be added as a source file in order for vivado to be able to synthesize.
+# Running Software
+
+Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program.
+
+Before running synthesis in Vivado, choose the correct program file for the processor core being tested. For example, select the proper `.mem` program from the folder for the desired architecture, such as:
+
+- Single-Issue In-Order
+- Multi-Issue In-Order
+- Single-Issue Out-of-Order
+- Multi-Issue Out-of-Order
+
+After selecting the program, update the file name inside the ROM module. In `ROM.v`, the string inside the `$readmemh()` statement must match the `.mem` file being used.
+
+Example:
+```verilog```
+$readmemh("programs.mem", memory);
 ### Note 
 Vivado versions before 2025.2 do _not_ recognize changes in these .mem program files as changes that invalidate the current bitstream. If you are running Vivado 2025.1 or earlier, if you change the contents of a .mem file, you must manually click _Run Synthesis_. Vivado will then tell you that "Synthesis has already been run and is up to date" this is **_false_** and is a bug that has been fixed in version 2025.2
  
