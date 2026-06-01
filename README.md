@@ -17,7 +17,7 @@ All core designs in this repository implement the RV32I base instruction set, ex
 
 # Running Software
 
-Each processor core is stored in its own folder based on the architecture being tested. For creating a Vivado project to test, select the source folder for the desired CPU design. Each folder contains the Verilog files and `.mem` files in test for each version of the processor. Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program, the `.mem` files must be loaded into Vivado for them to register in the ROM of any CPU Design.
+Each processor core is stored in its own folder based on the architecture being tested. For creating a Vivado project to test, select the source folder for the desired CPU design. Each folder contains the Verilog files and `.mem` files in test for each version of the processor. Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program, the `.mem` files must be loaded into Vivado for them to register in the ROM of any CPU Design. The `uart.v` file is found in the uart controller folder of V2/cores part of the path would need to be added in.
 
 The available processor folders may include:
 
