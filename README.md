@@ -16,7 +16,6 @@ All core designs in this repository implement the RV32I base instruction set, ex
  - fence.i
 
 # Running Software
-# Running Software
 
 Each processor core runs programs from a ROM that is initialized during synthesis. The program files are stored as `.mem` files, where each file contains the hex machine code for a specific test program.
 
