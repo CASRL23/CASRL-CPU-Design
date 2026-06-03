@@ -7,7 +7,7 @@ module ROM(
     reg [31:0] mem [0:32767];
 
     initial begin
-        $readmemh("array_sum.mem", mem);
+        $readmemh("simple_add.mem", mem);
     end
     
     // Synchronous read (good for block RAM inference)
