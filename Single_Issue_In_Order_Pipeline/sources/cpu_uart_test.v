@@ -45,13 +45,10 @@ module CPU(
     wire [7:0]  cpu_uart_rx_byte;
     wire [31:0] cpu_uart_status;
 
-    wire received;
-    wire [7:0] rx_byte;
-    wire is_receiving;
+    wire received = 1'b0;
+    wire [7:0] rx_byte = 8'h00;
+    wire recv_error = 1'b0;
     wire is_transmitting;
-    wire recv_error;
-    wire [3:0] rx_samples;
-    wire [3:0] rx_sample_countdown;
 
     reg        uart_transmit = 1'b0;
     reg [7:0]  uart_tx_byte  = 8'h00;
@@ -71,7 +68,7 @@ module CPU(
                               (print_state == 3'd0);
 
     assign cpu_uart_rx_byte = rx_byte;
-    assign cpu_uart_status  = {29'd0, recv_error, received, uart_ready_for_cpu};
+    assign cpu_uart_status  = {29'd0, received, recv_error, uart_ready_for_cpu};
 
     Pipeline_CPU PCPU(
         .Done(cpu_done),
@@ -84,24 +81,81 @@ module CPU(
         .UART_status(cpu_uart_status)
     );
 
-    uart #(
-        .baud_rate(BAUD_RATE),
-        .sys_clk_freq(SYS_CLK_FREQ)
-    ) u_uart (
-        .clk(clk),
-        .rst(system_reset),
-        .rx(uart_rx_sync),
-        .tx(UART_RXD_OUT),
-        .transmit(uart_transmit),
-        .tx_byte(uart_tx_byte),
-        .received(received),
-        .rx_byte(rx_byte),
-        .is_receiving(is_receiving),
-        .is_transmitting(is_transmitting),
-        .recv_error(recv_error),
-        .rx_samples(rx_samples),
-        .rx_sample_countdown(rx_sample_countdown)
-    );
+    localparam integer CLKS_PER_BIT = SYS_CLK_FREQ / BAUD_RATE;
+    localparam TX_IDLE  = 2'd0;
+    localparam TX_START = 2'd1;
+    localparam TX_DATA  = 2'd2;
+    localparam TX_STOP  = 2'd3;
+
+    reg [1:0]  tx_state = TX_IDLE;
+    reg [31:0] tx_count = 32'd0;
+    reg [2:0]  tx_bit_index = 3'd0;
+    reg [7:0]  tx_shift = 8'h00;
+    reg        tx_serial = 1'b1;
+
+    assign UART_RXD_OUT = tx_serial;
+    assign is_transmitting = (tx_state != TX_IDLE);
+
+    always @(posedge clk) begin
+        if (system_reset) begin
+            tx_state     <= TX_IDLE;
+            tx_count     <= 32'd0;
+            tx_bit_index <= 3'd0;
+            tx_shift     <= 8'h00;
+            tx_serial    <= 1'b1;
+        end else begin
+            case (tx_state)
+                TX_IDLE: begin
+                    tx_serial <= 1'b1;
+                    tx_count  <= 32'd0;
+
+                    if (uart_transmit) begin
+                        tx_shift     <= uart_tx_byte;
+                        tx_bit_index <= 3'd0;
+                        tx_serial    <= 1'b0;
+                        tx_state     <= TX_START;
+                    end
+                end
+
+                TX_START: begin
+                    if (tx_count == CLKS_PER_BIT - 1) begin
+                        tx_count  <= 32'd0;
+                        tx_serial <= tx_shift[0];
+                        tx_state  <= TX_DATA;
+                    end else begin
+                        tx_count <= tx_count + 1'b1;
+                    end
+                end
+
+                TX_DATA: begin
+                    if (tx_count == CLKS_PER_BIT - 1) begin
+                        tx_count <= 32'd0;
+
+                        if (tx_bit_index == 3'd7) begin
+                            tx_serial <= 1'b1;
+                            tx_state  <= TX_STOP;
+                        end else begin
+                            tx_bit_index <= tx_bit_index + 1'b1;
+                            tx_shift     <= {1'b0, tx_shift[7:1]};
+                            tx_serial    <= tx_shift[1];
+                        end
+                    end else begin
+                        tx_count <= tx_count + 1'b1;
+                    end
+                end
+
+                TX_STOP: begin
+                    if (tx_count == CLKS_PER_BIT - 1) begin
+                        tx_count  <= 32'd0;
+                        tx_state  <= TX_IDLE;
+                        tx_serial <= 1'b1;
+                    end else begin
+                        tx_count <= tx_count + 1'b1;
+                    end
+                end
+            endcase
+        end
+    end
 
     reg [31:0] cycle_count = 32'd0;
     reg [31:0] cycle_latched = 32'd0;
