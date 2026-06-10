@@ -8,13 +8,27 @@ module CPU(
     output wire UART_RXD_OUT   // FPGA -> PC terminal
 );
 
-    localparam BAUD_RATE    = 9600;
-    localparam SYS_CLK_FREQ = 100000000;
-    localparam RESET_CYCLES = 20'd1_000_000; // 10 ms at 100 MHz
+    localparam integer BAUD_RATE    = 9600;
+    localparam integer SYS_CLK_FREQ = 100000000;
+    localparam [19:0]  RESET_CYCLES = 20'd1_000_000; // 10 ms at 100 MHz
+    localparam DEBUG_DIRECT_UART = 1'b0;
+
+    localparam S_IDLE      = 3'd0;
+    localparam S_LOAD_BOOT = 3'd1;
+    localparam S_LOAD_DONE = 3'd2;
+    localparam S_PULSE     = 3'd3;
+    localparam S_WAIT_BUSY = 3'd4;
+    localparam S_WAIT_DONE = 3'd5;
 
     wire cpu_done;
     wire [31:0] display_out;
-    assign Done = cpu_done;
+
+    reg [25:0] heartbeat = 26'd0;
+    always @(posedge clk) begin
+        heartbeat <= heartbeat + 1'b1;
+    end
+
+    assign Done = DEBUG_DIRECT_UART ? heartbeat[25] : cpu_done;
 
     reg [2:0] reset_sync = 3'b111;
     always @(posedge clk) begin
@@ -40,46 +54,8 @@ module CPU(
         uart_rx_sync <= uart_rx_meta;
     end
 
-    wire        cpu_uart_transmit_signal;
-    wire [7:0]  cpu_uart_tx_byte;
-    wire [7:0]  cpu_uart_rx_byte;
-    wire [31:0] cpu_uart_status;
-
-    wire received = 1'b0;
-    wire [7:0] rx_byte = 8'h00;
-    wire recv_error = 1'b0;
-    wire is_transmitting;
-
-    reg        uart_transmit = 1'b0;
-    reg [7:0]  uart_tx_byte  = 8'h00;
-
-    reg [2:0] print_state = 3'd0;
-    reg       cpu_tx_pending = 1'b0;
-    reg       boot_printed = 1'b0;
-    reg       done_printed = 1'b0;
-
-    wire cpu_reset = system_reset || !boot_printed;
-
-    wire uart_ready_for_cpu = !system_reset &&
-                              boot_printed &&
-                              !is_transmitting &&
-                              !uart_transmit &&
-                              !cpu_tx_pending &&
-                              (print_state == 3'd0);
-
-    assign cpu_uart_rx_byte = rx_byte;
-    assign cpu_uart_status  = {29'd0, received, recv_error, uart_ready_for_cpu};
-
-    Pipeline_CPU PCPU(
-        .Done(cpu_done),
-        .Display_out(display_out),
-        .Clk(clk),
-        .Reset(cpu_reset),
-        .UART_rx_byte(cpu_uart_rx_byte),
-        .UART_tx_byte(cpu_uart_tx_byte),
-        .UART_transmit_signal(cpu_uart_transmit_signal),
-        .UART_status(cpu_uart_status)
-    );
+    reg         uart_transmit = 1'b0;
+    reg  [7:0]  uart_tx_byte = 8'h00;
 
     localparam integer CLKS_PER_BIT = SYS_CLK_FREQ / BAUD_RATE;
     localparam TX_IDLE  = 2'd0;
@@ -93,35 +69,40 @@ module CPU(
     reg [7:0]  tx_shift = 8'h00;
     reg        tx_serial = 1'b1;
 
+    wire received = 1'b0;
+    wire [7:0] rx_byte = 8'h00;
+    wire is_receiving = 1'b0;
+    wire recv_error = 1'b0;
+    wire is_transmitting = (tx_state != TX_IDLE);
+
     assign UART_RXD_OUT = tx_serial;
-    assign is_transmitting = (tx_state != TX_IDLE);
 
     always @(posedge clk) begin
         if (system_reset) begin
-            tx_state     <= TX_IDLE;
-            tx_count     <= 32'd0;
+            tx_state <= TX_IDLE;
+            tx_count <= 32'd0;
             tx_bit_index <= 3'd0;
-            tx_shift     <= 8'h00;
-            tx_serial    <= 1'b1;
+            tx_shift <= 8'h00;
+            tx_serial <= 1'b1;
         end else begin
             case (tx_state)
                 TX_IDLE: begin
                     tx_serial <= 1'b1;
-                    tx_count  <= 32'd0;
+                    tx_count <= 32'd0;
+                    tx_bit_index <= 3'd0;
 
                     if (uart_transmit) begin
-                        tx_shift     <= uart_tx_byte;
-                        tx_bit_index <= 3'd0;
-                        tx_serial    <= 1'b0;
-                        tx_state     <= TX_START;
+                        tx_shift <= uart_tx_byte;
+                        tx_serial <= 1'b0;
+                        tx_state <= TX_START;
                     end
                 end
 
                 TX_START: begin
                     if (tx_count == CLKS_PER_BIT - 1) begin
-                        tx_count  <= 32'd0;
+                        tx_count <= 32'd0;
                         tx_serial <= tx_shift[0];
-                        tx_state  <= TX_DATA;
+                        tx_state <= TX_DATA;
                     end else begin
                         tx_count <= tx_count + 1'b1;
                     end
@@ -132,12 +113,12 @@ module CPU(
                         tx_count <= 32'd0;
 
                         if (tx_bit_index == 3'd7) begin
+                            tx_bit_index <= 3'd0;
                             tx_serial <= 1'b1;
-                            tx_state  <= TX_STOP;
+                            tx_state <= TX_STOP;
                         end else begin
                             tx_bit_index <= tx_bit_index + 1'b1;
-                            tx_shift     <= {1'b0, tx_shift[7:1]};
-                            tx_serial    <= tx_shift[1];
+                            tx_serial <= tx_shift[tx_bit_index + 3'd1];
                         end
                     end else begin
                         tx_count <= tx_count + 1'b1;
@@ -145,17 +126,65 @@ module CPU(
                 end
 
                 TX_STOP: begin
+                    tx_serial <= 1'b1;
                     if (tx_count == CLKS_PER_BIT - 1) begin
-                        tx_count  <= 32'd0;
-                        tx_state  <= TX_IDLE;
-                        tx_serial <= 1'b1;
+                        tx_count <= 32'd0;
+                        tx_state <= TX_IDLE;
                     end else begin
                         tx_count <= tx_count + 1'b1;
                     end
                 end
+
+                default: begin
+                    tx_state <= TX_IDLE;
+                    tx_serial <= 1'b1;
+                end
             endcase
         end
     end
+
+    wire        cpu_uart_transmit_signal;
+    wire [7:0]  cpu_uart_tx_byte;
+    wire [7:0]  cpu_uart_rx_byte;
+    wire [31:0] cpu_uart_status;
+
+    reg [7:0] rx_byte_latched = 8'h00;
+    reg       rx_available = 1'b0;
+    reg [19:0] rx_visible_count = 20'd0;
+
+    reg [2:0] print_state = 3'd0;
+    reg       cpu_tx_pending = 1'b0;
+    reg       boot_printed = 1'b0;
+    reg       done_printed = 1'b0;
+
+    wire cpu_reset = system_reset || !boot_printed;
+
+    wire uart_ready_for_cpu = !system_reset &&
+                              boot_printed &&
+                              !is_transmitting &&
+                              !uart_transmit &&
+                              !cpu_tx_pending &&
+                              (print_state == S_IDLE);
+
+    assign cpu_uart_rx_byte = rx_byte_latched;
+    assign cpu_uart_status = {
+        28'd0,
+        is_receiving,
+        rx_available,
+        recv_error,
+        uart_ready_for_cpu
+    };
+
+    Pipeline_CPU PCPU(
+        .Done(cpu_done),
+        .Display_out(display_out),
+        .Clk(clk),
+        .Reset(cpu_reset),
+        .UART_rx_byte(cpu_uart_rx_byte),
+        .UART_tx_byte(cpu_uart_tx_byte),
+        .UART_transmit_signal(cpu_uart_transmit_signal),
+        .UART_status(cpu_uart_status)
+    );
 
     reg [31:0] cycle_count = 32'd0;
     reg [31:0] cycle_latched = 32'd0;
@@ -268,12 +297,31 @@ module CPU(
         end
     endfunction
 
-    localparam S_IDLE      = 3'd0;
-    localparam S_LOAD_BOOT = 3'd1;
-    localparam S_LOAD_DONE = 3'd2;
-    localparam S_PULSE     = 3'd3;
-    localparam S_WAIT_BUSY = 3'd4;
-    localparam S_WAIT_DONE = 3'd5;
+    function [7:0] direct_char;
+        input [7:0] index;
+        begin
+            case (index)
+                8'd0:  direct_char = 8'h0D;
+                8'd1:  direct_char = 8'h0A;
+                8'd2:  direct_char = "S";
+                8'd3:  direct_char = "I";
+                8'd4:  direct_char = " ";
+                8'd5:  direct_char = "U";
+                8'd6:  direct_char = "A";
+                8'd7:  direct_char = "R";
+                8'd8:  direct_char = "T";
+                8'd9:  direct_char = " ";
+                8'd10: direct_char = "L";
+                8'd11: direct_char = "O";
+                8'd12: direct_char = "C";
+                8'd13: direct_char = "A";
+                8'd14: direct_char = "L";
+                8'd15: direct_char = 8'h0D;
+                8'd16: direct_char = 8'h0A;
+                default: direct_char = 8'h00;
+            endcase
+        end
+    endfunction
 
     reg [7:0] msg_index = 8'd0;
     reg       cpu_uart_transmit_d = 1'b0;
@@ -290,10 +338,63 @@ module CPU(
             cpu_uart_transmit_d <= 1'b0;
             cpu_tx_pending      <= 1'b0;
             cpu_tx_pending_byte <= 8'h00;
+            rx_byte_latched     <= 8'h00;
+            rx_available        <= 1'b0;
+            rx_visible_count    <= 20'd0;
         end else begin
             uart_transmit <= 1'b0;
             cpu_uart_transmit_d <= cpu_uart_transmit_signal;
 
+            if (received) begin
+                rx_byte_latched <= rx_byte;
+                rx_available <= 1'b1;
+                rx_visible_count <= 20'd1_000_000;
+            end else if (rx_visible_count != 0) begin
+                rx_visible_count <= rx_visible_count - 1'b1;
+            end else begin
+                rx_available <= 1'b0;
+            end
+
+            if (DEBUG_DIRECT_UART) begin
+                case (print_state)
+                    S_IDLE: begin
+                        msg_index <= 8'd0;
+                        print_state <= S_LOAD_BOOT;
+                    end
+
+                    S_LOAD_BOOT: begin
+                        if (!is_transmitting) begin
+                            if (direct_char(msg_index) != 8'h00) begin
+                                uart_tx_byte <= direct_char(msg_index);
+                                msg_index <= msg_index + 1'b1;
+                                print_state <= S_PULSE;
+                            end else begin
+                                msg_index <= 8'd0;
+                                print_state <= S_WAIT_DONE;
+                            end
+                        end
+                    end
+
+                    S_PULSE: begin
+                        uart_transmit <= 1'b1;
+                        print_state <= S_WAIT_BUSY;
+                    end
+
+                    S_WAIT_BUSY: begin
+                        if (is_transmitting)
+                            print_state <= S_WAIT_DONE;
+                    end
+
+                    S_WAIT_DONE: begin
+                        if (!is_transmitting)
+                            print_state <= S_IDLE;
+                    end
+
+                    default: begin
+                        print_state <= S_IDLE;
+                    end
+                endcase
+            end else begin
             if (boot_printed && cpu_uart_transmit_signal && !cpu_uart_transmit_d && !cpu_tx_pending) begin
                 cpu_tx_pending      <= 1'b1;
                 cpu_tx_pending_byte <= cpu_uart_tx_byte;
@@ -302,14 +403,14 @@ module CPU(
             case (print_state)
                 S_IDLE: begin
                     if (cpu_tx_pending && !is_transmitting) begin
-                        uart_tx_byte   <= cpu_tx_pending_byte;
+                        uart_tx_byte <= cpu_tx_pending_byte;
                         cpu_tx_pending <= 1'b0;
-                        print_state    <= S_PULSE;
+                        print_state <= S_PULSE;
                     end else if (!boot_printed) begin
-                        msg_index   <= 8'd0;
+                        msg_index <= 8'd0;
                         print_state <= S_LOAD_BOOT;
                     end else if (done_latched && !done_printed) begin
-                        msg_index   <= 8'd0;
+                        msg_index <= 8'd0;
                         print_state <= S_LOAD_DONE;
                     end
                 end
@@ -318,11 +419,11 @@ module CPU(
                     if (!is_transmitting) begin
                         if (boot_char(msg_index) != 8'h00) begin
                             uart_tx_byte <= boot_char(msg_index);
-                            msg_index    <= msg_index + 1'b1;
-                            print_state  <= S_PULSE;
+                            msg_index <= msg_index + 1'b1;
+                            print_state <= S_PULSE;
                         end else begin
                             boot_printed <= 1'b1;
-                            print_state  <= S_IDLE;
+                            print_state <= S_IDLE;
                         end
                     end
                 end
@@ -331,18 +432,18 @@ module CPU(
                     if (!is_transmitting) begin
                         if (done_char(msg_index) != 8'h00) begin
                             uart_tx_byte <= done_char(msg_index);
-                            msg_index    <= msg_index + 1'b1;
-                            print_state  <= S_PULSE;
+                            msg_index <= msg_index + 1'b1;
+                            print_state <= S_PULSE;
                         end else begin
                             done_printed <= 1'b1;
-                            print_state  <= S_IDLE;
+                            print_state <= S_IDLE;
                         end
                     end
                 end
 
                 S_PULSE: begin
                     uart_transmit <= 1'b1;
-                    print_state   <= S_WAIT_BUSY;
+                    print_state <= S_WAIT_BUSY;
                 end
 
                 S_WAIT_BUSY: begin
@@ -359,6 +460,7 @@ module CPU(
                     print_state <= S_IDLE;
                 end
             endcase
+            end
         end
     end
 

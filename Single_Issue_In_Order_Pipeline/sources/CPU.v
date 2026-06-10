@@ -8,354 +8,131 @@ module CPU_1(
     output wire UART_RXD_OUT
 );
 
-    localparam BAUD_RATE    = 9600;
-    localparam SYS_CLK_FREQ = 100000000;
-    localparam RESET_CYCLES = 20'd1_000_000;
-
-    wire cpu_done;
-    wire [31:0] display_out;
+    localparam integer CLK_HZ       = 100_000_000;
+    localparam integer BAUD         = 9600;
+    localparam integer CLKS_PER_BIT = CLK_HZ / BAUD;
+    localparam integer GAP_CLKS     = CLK_HZ / 2;
 
     reg [25:0] heartbeat = 26'd0;
     always @(posedge clk) begin
         heartbeat <= heartbeat + 1'b1;
     end
+    assign Done = heartbeat[25];
 
-    // During bring-up, Done blinks so you can prove this top module is loaded.
-    assign Done = boot_printed ? cpu_done : heartbeat[25];
+    // Keep these referenced so Vivado cannot warn/trim them in confusing ways.
+    wire unused_inputs = Reset ^ UART_TXD_IN;
 
-    reg [2:0] reset_sync = 3'b111;
-    always @(posedge clk) begin
-        reset_sync <= {reset_sync[1:0], Reset};
-    end
-
-    wire reset_clean = reset_sync[2];
-
-    reg [19:0] reset_delay = RESET_CYCLES;
-    always @(posedge clk) begin
-        if (reset_clean)
-            reset_delay <= RESET_CYCLES;
-        else if (reset_delay != 0)
-            reset_delay <= reset_delay - 1'b1;
-    end
-
-    wire system_reset = reset_clean || (reset_delay != 0);
-
-    reg uart_rx_meta = 1'b1;
-    reg uart_rx_sync = 1'b1;
-    always @(posedge clk) begin
-        uart_rx_meta <= UART_TXD_IN;
-        uart_rx_sync <= uart_rx_meta;
-    end
-
-    wire        cpu_uart_transmit_signal;
-    wire [7:0]  cpu_uart_tx_byte;
-    wire [7:0]  cpu_uart_rx_byte;
-    wire [31:0] cpu_uart_status;
-
-    wire received = 1'b0;
-    wire [7:0] rx_byte = 8'h00;
-    wire recv_error = 1'b0;
-    wire is_transmitting;
-
-    reg        uart_transmit = 1'b0;
-    reg [7:0]  uart_tx_byte  = 8'h00;
-
-    reg [2:0] print_state = 3'd0;
-    reg       cpu_tx_pending = 1'b0;
-    reg       boot_printed = 1'b0;
-    reg       done_printed = 1'b0;
-
-    wire cpu_reset = system_reset || !boot_printed;
-
-    wire uart_ready_for_cpu = !system_reset &&
-                              boot_printed &&
-                              !is_transmitting &&
-                              !uart_transmit &&
-                              !cpu_tx_pending &&
-                              (print_state == 3'd0);
-
-    assign cpu_uart_rx_byte = rx_byte;
-    assign cpu_uart_status  = {29'd0, received, recv_error, uart_ready_for_cpu};
-
-    Pipeline_CPU PCPU(
-        .Done(cpu_done),
-        .Display_out(display_out),
-        .Clk(clk),
-        .Reset(cpu_reset),
-        .UART_rx_byte(cpu_uart_rx_byte),
-        .UART_tx_byte(cpu_uart_tx_byte),
-        .UART_transmit_signal(cpu_uart_transmit_signal),
-        .UART_status(cpu_uart_status)
-    );
-
-    localparam integer CLKS_PER_BIT = SYS_CLK_FREQ / BAUD_RATE;
-    localparam TX_IDLE  = 2'd0;
-    localparam TX_START = 2'd1;
-    localparam TX_DATA  = 2'd2;
-    localparam TX_STOP  = 2'd3;
-
-    reg [1:0]  tx_state = TX_IDLE;
-    reg [31:0] tx_count = 32'd0;
-    reg [2:0]  tx_bit_index = 3'd0;
-    reg [7:0]  tx_shift = 8'h00;
-    reg        tx_serial = 1'b1;
-
-    assign UART_RXD_OUT = tx_serial;
-    assign is_transmitting = (tx_state != TX_IDLE);
-
-    always @(posedge clk) begin
-        if (system_reset) begin
-            tx_state     <= TX_IDLE;
-            tx_count     <= 32'd0;
-            tx_bit_index <= 3'd0;
-            tx_shift     <= 8'h00;
-            tx_serial    <= 1'b1;
-        end else begin
-            case (tx_state)
-                TX_IDLE: begin
-                    tx_serial <= 1'b1;
-                    tx_count  <= 32'd0;
-
-                    if (uart_transmit) begin
-                        tx_shift     <= uart_tx_byte;
-                        tx_bit_index <= 3'd0;
-                        tx_serial    <= 1'b0;
-                        tx_state     <= TX_START;
-                    end
-                end
-
-                TX_START: begin
-                    if (tx_count == CLKS_PER_BIT - 1) begin
-                        tx_count  <= 32'd0;
-                        tx_serial <= tx_shift[0];
-                        tx_state  <= TX_DATA;
-                    end else begin
-                        tx_count <= tx_count + 1'b1;
-                    end
-                end
-
-                TX_DATA: begin
-                    if (tx_count == CLKS_PER_BIT - 1) begin
-                        tx_count <= 32'd0;
-
-                        if (tx_bit_index == 3'd7) begin
-                            tx_serial <= 1'b1;
-                            tx_state  <= TX_STOP;
-                        end else begin
-                            tx_bit_index <= tx_bit_index + 1'b1;
-                            tx_shift     <= {1'b0, tx_shift[7:1]};
-                            tx_serial    <= tx_shift[1];
-                        end
-                    end else begin
-                        tx_count <= tx_count + 1'b1;
-                    end
-                end
-
-                TX_STOP: begin
-                    if (tx_count == CLKS_PER_BIT - 1) begin
-                        tx_count  <= 32'd0;
-                        tx_state  <= TX_IDLE;
-                        tx_serial <= 1'b1;
-                    end else begin
-                        tx_count <= tx_count + 1'b1;
-                    end
-                end
-            endcase
-        end
-    end
-
-    reg [31:0] cycle_count = 32'd0;
-    reg [31:0] cycle_latched = 32'd0;
-    reg        done_d = 1'b0;
-    reg        done_latched = 1'b0;
-
-    always @(posedge clk) begin
-        if (cpu_reset) begin
-            cycle_count   <= 32'd0;
-            cycle_latched <= 32'd0;
-            done_d        <= 1'b0;
-            done_latched  <= 1'b0;
-        end else begin
-            done_d <= cpu_done;
-
-            if (!cpu_done)
-                cycle_count <= cycle_count + 1'b1;
-
-            if (cpu_done && !done_d) begin
-                cycle_latched <= cycle_count;
-                done_latched  <= 1'b1;
-            end
-        end
-    end
-
-    function [7:0] hex_char;
-        input [3:0] nibble;
+    function [7:0] msg_char;
+        input [4:0] idx;
         begin
-            case (nibble)
-                4'h0: hex_char = "0";
-                4'h1: hex_char = "1";
-                4'h2: hex_char = "2";
-                4'h3: hex_char = "3";
-                4'h4: hex_char = "4";
-                4'h5: hex_char = "5";
-                4'h6: hex_char = "6";
-                4'h7: hex_char = "7";
-                4'h8: hex_char = "8";
-                4'h9: hex_char = "9";
-                4'hA: hex_char = "A";
-                4'hB: hex_char = "B";
-                4'hC: hex_char = "C";
-                4'hD: hex_char = "D";
-                4'hE: hex_char = "E";
-                default: hex_char = "F";
+            case (idx)
+                5'd0:  msg_char = "U";
+                5'd1:  msg_char = "A";
+                5'd2:  msg_char = "R";
+                5'd3:  msg_char = "T";
+                5'd4:  msg_char = " ";
+                5'd5:  msg_char = "O";
+                5'd6:  msg_char = "K";
+                5'd7:  msg_char = " ";
+                5'd8:  msg_char = "9";
+                5'd9:  msg_char = "6";
+                5'd10: msg_char = "0";
+                5'd11: msg_char = "0";
+                5'd12: msg_char = 8'h0D;
+                5'd13: msg_char = 8'h0A;
+                default: msg_char = 8'h00;
             endcase
         end
     endfunction
 
-    function [7:0] boot_char;
-        input [7:0] index;
-        begin
-            case (index)
-                8'd0:  boot_char = 8'h0D;
-                8'd1:  boot_char = 8'h0A;
-                8'd2:  boot_char = "C";
-                8'd3:  boot_char = "P";
-                8'd4:  boot_char = "U";
-                8'd5:  boot_char = "1";
-                8'd6:  boot_char = " ";
-                8'd7:  boot_char = "B";
-                8'd8:  boot_char = "O";
-                8'd9:  boot_char = "O";
-                8'd10: boot_char = "T";
-                8'd11: boot_char = 8'h0D;
-                8'd12: boot_char = 8'h0A;
-                default: boot_char = 8'h00;
-            endcase
-        end
-    endfunction
+    localparam ST_LOAD  = 3'd0;
+    localparam ST_START = 3'd1;
+    localparam ST_DATA  = 3'd2;
+    localparam ST_STOP  = 3'd3;
+    localparam ST_NEXT  = 3'd4;
+    localparam ST_GAP   = 3'd5;
 
-    function [7:0] done_char;
-        input [7:0] index;
-        begin
-            case (index)
-                8'd0:  done_char = "C";
-                8'd1:  done_char = "P";
-                8'd2:  done_char = "U";
-                8'd3:  done_char = " ";
-                8'd4:  done_char = "D";
-                8'd5:  done_char = "O";
-                8'd6:  done_char = "N";
-                8'd7:  done_char = "E";
-                8'd8:  done_char = " ";
-                8'd9:  done_char = "0";
-                8'd10: done_char = "x";
-                8'd11: done_char = hex_char(cycle_latched[31:28]);
-                8'd12: done_char = hex_char(cycle_latched[27:24]);
-                8'd13: done_char = hex_char(cycle_latched[23:20]);
-                8'd14: done_char = hex_char(cycle_latched[19:16]);
-                8'd15: done_char = hex_char(cycle_latched[15:12]);
-                8'd16: done_char = hex_char(cycle_latched[11:8]);
-                8'd17: done_char = hex_char(cycle_latched[7:4]);
-                8'd18: done_char = hex_char(cycle_latched[3:0]);
-                8'd19: done_char = 8'h0D;
-                8'd20: done_char = 8'h0A;
-                default: done_char = 8'h00;
-            endcase
-        end
-    endfunction
+    reg [2:0]  state = ST_LOAD;
+    reg [31:0] baud_count = 32'd0;
+    reg [31:0] gap_count = 32'd0;
+    reg [4:0]  char_index = 5'd0;
+    reg [2:0]  bit_index = 3'd0;
+    reg [7:0]  tx_byte = 8'h00;
+    reg        tx_line = 1'b1;
 
-    localparam S_IDLE      = 3'd0;
-    localparam S_LOAD_BOOT = 3'd1;
-    localparam S_LOAD_DONE = 3'd2;
-    localparam S_PULSE     = 3'd3;
-    localparam S_WAIT_BUSY = 3'd4;
-    localparam S_WAIT_DONE = 3'd5;
-
-    reg [7:0] msg_index = 8'd0;
-    reg       cpu_uart_transmit_d = 1'b0;
-    reg [7:0] cpu_tx_pending_byte = 8'h00;
+    assign UART_RXD_OUT = tx_line ^ unused_inputs ^ unused_inputs;
 
     always @(posedge clk) begin
-        if (system_reset) begin
-            uart_transmit       <= 1'b0;
-            uart_tx_byte        <= 8'h00;
-            print_state         <= S_IDLE;
-            msg_index           <= 8'd0;
-            boot_printed        <= 1'b0;
-            done_printed        <= 1'b0;
-            cpu_uart_transmit_d <= 1'b0;
-            cpu_tx_pending      <= 1'b0;
-            cpu_tx_pending_byte <= 8'h00;
-        end else begin
-            uart_transmit <= 1'b0;
-            cpu_uart_transmit_d <= cpu_uart_transmit_signal;
+        case (state)
+            ST_LOAD: begin
+                tx_line <= 1'b1;
+                tx_byte <= msg_char(char_index);
+                baud_count <= 32'd0;
+                bit_index <= 3'd0;
 
-            if (boot_printed && cpu_uart_transmit_signal && !cpu_uart_transmit_d && !cpu_tx_pending) begin
-                cpu_tx_pending      <= 1'b1;
-                cpu_tx_pending_byte <= cpu_uart_tx_byte;
+                if (msg_char(char_index) == 8'h00) begin
+                    char_index <= 5'd0;
+                    gap_count <= 32'd0;
+                    state <= ST_GAP;
+                end else begin
+                    state <= ST_START;
+                end
             end
 
-            case (print_state)
-                S_IDLE: begin
-                    if (cpu_tx_pending && !is_transmitting) begin
-                        uart_tx_byte   <= cpu_tx_pending_byte;
-                        cpu_tx_pending <= 1'b0;
-                        print_state    <= S_PULSE;
-                    end else if (!boot_printed) begin
-                        msg_index   <= 8'd0;
-                        print_state <= S_LOAD_BOOT;
-                    end else if (done_latched && !done_printed) begin
-                        msg_index   <= 8'd0;
-                        print_state <= S_LOAD_DONE;
+            ST_START: begin
+                tx_line <= 1'b0;
+                if (baud_count == CLKS_PER_BIT - 1) begin
+                    baud_count <= 32'd0;
+                    state <= ST_DATA;
+                end else begin
+                    baud_count <= baud_count + 1'b1;
+                end
+            end
+
+            ST_DATA: begin
+                tx_line <= tx_byte[bit_index];
+                if (baud_count == CLKS_PER_BIT - 1) begin
+                    baud_count <= 32'd0;
+                    if (bit_index == 3'd7) begin
+                        bit_index <= 3'd0;
+                        state <= ST_STOP;
+                    end else begin
+                        bit_index <= bit_index + 1'b1;
                     end
+                end else begin
+                    baud_count <= baud_count + 1'b1;
                 end
+            end
 
-                S_LOAD_BOOT: begin
-                    if (!is_transmitting) begin
-                        if (boot_char(msg_index) != 8'h00) begin
-                            uart_tx_byte <= boot_char(msg_index);
-                            msg_index    <= msg_index + 1'b1;
-                            print_state  <= S_PULSE;
-                        end else begin
-                            boot_printed <= 1'b1;
-                            print_state  <= S_IDLE;
-                        end
-                    end
+            ST_STOP: begin
+                tx_line <= 1'b1;
+                if (baud_count == CLKS_PER_BIT - 1) begin
+                    baud_count <= 32'd0;
+                    state <= ST_NEXT;
+                end else begin
+                    baud_count <= baud_count + 1'b1;
                 end
+            end
 
-                S_LOAD_DONE: begin
-                    if (!is_transmitting) begin
-                        if (done_char(msg_index) != 8'h00) begin
-                            uart_tx_byte <= done_char(msg_index);
-                            msg_index    <= msg_index + 1'b1;
-                            print_state  <= S_PULSE;
-                        end else begin
-                            done_printed <= 1'b1;
-                            print_state  <= S_IDLE;
-                        end
-                    end
-                end
+            ST_NEXT: begin
+                char_index <= char_index + 1'b1;
+                state <= ST_LOAD;
+            end
 
-                S_PULSE: begin
-                    uart_transmit <= 1'b1;
-                    print_state   <= S_WAIT_BUSY;
+            ST_GAP: begin
+                tx_line <= 1'b1;
+                if (gap_count == GAP_CLKS - 1) begin
+                    gap_count <= 32'd0;
+                    state <= ST_LOAD;
+                end else begin
+                    gap_count <= gap_count + 1'b1;
                 end
+            end
 
-                S_WAIT_BUSY: begin
-                    if (is_transmitting)
-                        print_state <= S_WAIT_DONE;
-                end
-
-                S_WAIT_DONE: begin
-                    if (!is_transmitting)
-                        print_state <= S_IDLE;
-                end
-
-                default: begin
-                    print_state <= S_IDLE;
-                end
-            endcase
-        end
+            default: begin
+                state <= ST_LOAD;
+            end
+        endcase
     end
 
 endmodule
