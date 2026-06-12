@@ -10,7 +10,8 @@ module RAM(
     input wire [7:0] UART_RX_Byte,
     input wire [31:0] UART_status
 );
-    // UART memory-mapped addresses
+    // UART memory-mapped word indexes. CPU byte addresses are index << 2.
+    // RX=0x00, TX=0x04, TX strobe=0x08, status=0x0C.
     localparam UART_RX_ADDRESS = 8'h00;
     localparam UART_TX_ADDRESS = 8'h01;
     localparam UART_TRANSMIT_SIGNAL_ADDRESS = 8'h02;
@@ -26,12 +27,21 @@ module RAM(
     reg [31:0] UART_STATUS_reg;
     
     reg [31:0] temp;
+
+    initial begin
+        UART_RX_reg = 32'h00000000;
+        UART_TX_reg = 32'h00000000;
+        UART_TRANSMIT_SIGNAL_reg = 32'h00000000;
+        UART_STATUS_reg = 32'h00000000;
+        temp = 32'h00000000;
+    end
     
     // Synchronous write
     always @(posedge Clk) begin
         // Update UART input registers every cycle
         UART_RX_reg <= {24'h0, UART_RX_Byte};
         UART_STATUS_reg <= UART_status;
+        UART_TRANSMIT_SIGNAL_reg <= 32'h00000000;
         
         if (Store) begin
             // Check if writing to UART addresses
